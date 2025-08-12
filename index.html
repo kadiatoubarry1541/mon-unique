@@ -4,12 +4,6 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>A TOI MON UNIQUE</title>
-
-  <div class="wrap">
-    <h1>À Mon Toi Mon ROI</h1>
-    <p class="quote"> Ta paix est mon premier objectif
-        <br>Tes principes sont mes limites et tes désirs sont ma direction.
-    </p>
 <style>
   :root{--accent:#c0392b;--bg:#fdf6f0;--card:#fff5f5}
   body{font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial; background:var(--bg); color:#222; margin:0}
@@ -25,10 +19,17 @@
   .final{text-align:center;margin-top:8px;font-weight:600}
   .btn{background:var(--accent);color:#fff;padding:10px 14px;border-radius:8px;border:0;cursor:pointer}
   textarea{width:100%;padding:8px;border-radius:6px;border:1px solid #ccc;resize:vertical}
-  .responses-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:10px}
-  .response-item{background:#fff;border:1px solid #ddd;padding:8px;border-radius:8px}
+  .responses-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px;margin-top:10px}
+  .response-item{background:#fff;border:1px solid #ddd;padding:12px;border-radius:8px;position:relative}
   .response-header{display:flex;justify-content:space-between;font-size:0.9em;margin-bottom:5px}
-  .test-image,.test-audio,.test-video{background:#f0f0f0;padding:10px;text-align:center;border-radius:6px}
+  .response-text{white-space:pre-wrap; margin-bottom: 10px;}
+  .response-media{margin-top:8px}
+  .delete-btn{position:absolute;top:5px;right:5px;background:transparent;border:none;color:#c0392b;cursor:pointer;font-size:18px}
+  .no-responses{text-align:center;padding:20px;font-style:italic;color:#666}
+  .response-actions{margin-top:10px;display:flex;justify-content:space-between}
+  .file-input-wrapper{position:relative;margin:10px 0}
+  .file-input-wrapper input[type="file"]{position:absolute;left:0;top:0;opacity:0;width:100%;height:100%;cursor:pointer}
+  .file-input-label{display:block;background:#e0e0e0;padding:8px 12px;border-radius:6px;text-align:center;cursor:pointer}
   @media (max-width:480px){ .media-grid{grid-template-columns:1fr} }
 </style>
 </head>
@@ -106,9 +107,10 @@
         <div><img src="apres/20230507_151958-1.jpg" alt="Après 3"></div>
         <div><img src="apres/20230507_130427.jpg" alt="Après 4"></div>
         <div><img src="apres/20230514_181118.jpg" alt="Après 5"></div>
-         <div><video controls preload="metadata"><source src="apres/Video_20250523_112832.mp4" type="video/mp4">Votre navigateur ne supporte pas la vidéo.</video></div>
-          <div style="grid-column:1/-1">
-        <audio controls preload="metadata" style="width:100%"><source src="apres/11.m4a" type="audio/mpeg">Votre navigateur ne supporte pas l'audio.</audio>
+        <div><video controls preload="metadata"><source src="Vidéo_20250809_113747.mp4" type="video/mp4">Votre navigateur ne supporte pas la vidéo.</video></div>
+        <div><video controls preload="metadata"><source src="/Vidéo_20250523_112832.mp4" type="video/mp4">Votre navigateur ne supporte pas la vidéo.</video></div>
+        <div style="grid-column:1/-1">
+          <audio controls preload="metadata" style="width:100%"><source src="apres/11.m4a" type="audio/mpeg">Votre navigateur ne supporte pas l'audio.</audio>
         </div>
       </div>
     </div>
@@ -148,161 +150,170 @@
         Lorsque tu n’étais que l’espoir dans mon cœur,
         <br>
         Je ne veux plus te parler car tu es ma bouche;
-        
       </p>
     </div>
 
-    <!-- Section réponse -->
-    <div class="section response-section">
-      
-
-<style>
-  :root{--accent:#c0392b;--bg:#fdf6f0;--card:#fff5f5}
-  body{font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial; background:var(--bg); color:#222; margin:0}
-  .wrap{max-width:1100px;margin:24px auto;padding:18px}
-  h1,h2{text-align:center;color:var(--accent);margin:.4em 0}
-  .quote{font-style:italic;background:#fff;padding:12px;border-left:4px solid var(--accent);border-radius:6px;margin-bottom:18px}
-  .section{background:var(--card);padding:14px;border-radius:10px;margin-bottom:18px}
-  .controls{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:12px}
-  .media-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
-  img{width:100%;height:auto;border-radius:8px;display:block}
-  video,audio{width:100%;border-radius:8px;background:#000}
-  .caption{font-size:.95rem;padding-top:6px;text-align:center}
-  .final{text-align:center;margin-top:8px;font-weight:600}
-  .btn{background:var(--accent);color:#fff;padding:10px 14px;border-radius:8px;border:0;cursor:pointer}
-  textarea{width:100%;padding:8px;border-radius:6px;border:1px solid #ccc;resize:vertical}
-  .responses-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px;margin-top:10px}
-  .response-item{background:#fff;border:1px solid #ddd;padding:8px;border-radius:8px}
-  .response-header{display:flex;justify-content:space-between;font-size:0.9em;margin-bottom:5px}
-  .response-text{white-space:pre-wrap}
-  @media (max-width:480px){ .media-grid{grid-template-columns:1fr} }
-</style>
-</head>
-<body>
-
-    <!-- Sections AVANT, AVEC, APRES ... (non modifiées, gardées comme dans ta version) -->
-
-    <!-- Ici on met juste un rappel de la section réponse -->
+    <!-- Section réponse améliorée -->
     <div class="section response-section">
       <h2>Réponds-moi ❤️</h2>
       <p>Tu peux m’écrire, m’envoyer une photo, une vidéo ou un audio directement ici :</p>
 
       <form id="responseForm">
-        <textarea id="textResponse" placeholder="Écris ta réponse ici..." rows="4"></textarea>
+        <div class="form-group">
+          <label for="userName">Ton nom :</label>
+          <input type="text" id="userName" placeholder="Comment veux-tu qu'on t'appelle ?" class="form-input">
+        </div>
+        
+        <div class="form-group">
+          <textarea id="textResponse" placeholder="Écris ta réponse ici..." rows="4" class="form-textarea"></textarea>
+        </div>
 
-        <div style="margin: 10px 0;">
-          <label>Choisis un fichier (photo, audio, vidéo) : </label>
+        <div class="file-input-wrapper">
+          <label class="file-input-label">📎 Choisis un fichier (photo, audio, vidéo)</label>
           <input type="file" id="mediaInput" accept="image/*,audio/*,video/*" />
         </div>
 
-        <button type="submit" class="btn">Envoyer le message</button>
+        <div class="response-actions">
+          <button type="submit" class="btn">Envoyer le message</button>
+          <button type="button" class="btn" id="clearResponses" style="background:#888;">Effacer toutes les réponses</button>
+        </div>
       </form>
 
-      <div id="responsesContainer"></div>
+      <div id="responsesContainer">
+        <div class="no-responses" id="noResponsesMessage">Aucune réponse pour le moment. Sois le premier à réagir !</div>
+      </div>
     </div>
   </div>
 
 <script>
-  const responses = [];
+  // Charger les réponses depuis le localStorage
+  let responses = JSON.parse(localStorage.getItem('responses')) || [];
+  
   const form = document.getElementById('responseForm');
   const textInput = document.getElementById('textResponse');
   const mediaInput = document.getElementById('mediaInput');
+  const userNameInput = document.getElementById('userName');
   const responsesContainer = document.getElementById('responsesContainer');
-
+  const noResponsesMessage = document.getElementById('noResponsesMessage');
+  const clearResponsesBtn = document.getElementById('clearResponses');
+  
+  // Afficher les réponses au chargement de la page
+  renderResponses();
+  
   form.addEventListener('submit', function(e) {
     e.preventDefault();
-
+    
+    const userName = userNameInput.value.trim() || "Anonyme";
     const textValue = textInput.value.trim();
     const file = mediaInput.files[0];
-
+    
     if (!textValue && !file) {
       alert('Merci d\'écrire un message ou choisir un fichier avant d\'envoyer.');
       return;
     }
-
+    
     if (file) {
       const type = file.type.split('/')[0]; // image, audio, video
       const reader = new FileReader();
-
+      
       reader.onload = function(event) {
-        addResponse(type, event.target.result);
+        addResponse(userName, type, event.target.result, textValue);
       };
-
+      
       reader.readAsDataURL(file);
+    } else {
+      addResponse(userName, 'text', textValue);
     }
-
-    if (textValue) {
-      addResponse('text', textValue);
-    }
-
+    
     // Reset form
+    userNameInput.value = '';
     textInput.value = '';
     mediaInput.value = '';
   });
-
-  function addResponse(type, content) {
+  
+  function addResponse(userName, type, content, textContent = '') {
     const now = new Date();
-    responses.push({
+    const response = {
       id: Date.now(),
+      userName,
       type,
       content,
+      textContent,
       timestamp: now.toLocaleString()
-    });
+    };
+    
+    responses.push(response);
+    saveResponses();
     renderResponses();
   }
-
+  
+  function saveResponses() {
+    localStorage.setItem('responses', JSON.stringify(responses));
+  }
+  
   function renderResponses() {
     if (responses.length === 0) {
-      responsesContainer.innerHTML = '';
+      responsesContainer.innerHTML = '<div class="no-responses" id="noResponsesMessage">Aucune réponse pour le moment. Sois le premier à réagir !</div>';
       return;
     }
-
-    let html = '<h3>Vos réponses :</h3><div class="responses-grid">';
+    
+    noResponsesMessage.style.display = 'none';
+    
+    // Trier les réponses par date (les plus récentes en premier)
+    responses.sort((a, b) => b.id - a.id);
+    
+    let html = '<h3>Réponses des visiteurs :</h3><div class="responses-grid">';
+    
     responses.forEach(r => {
-      html += `<div class="response-item ${r.type}">
+      html += `<div class="response-item">
         <div class="response-header">
-          <span>${r.type === 'text' ? '✉️' : r.type === 'audio' ? '🎵' : r.type === 'video' ? '🎬' : '🖼️'}</span>
+          <span><strong>${escapeHtml(r.userName)}</strong></span>
           <span>${r.timestamp}</span>
         </div>`;
-
-      if (r.type === 'text') {
-        html += `<div class="response-text">${escapeHtml(r.content)}</div>`;
-      } else if (r.type === 'image') {
-        html += `<img src="${r.content}" alt="Image reçue" style="max-width:100%; border-radius:6px;">`;
-      } else if (r.type === 'audio') {
-        html += `<audio controls src="${r.content}" style="width:100%;"></audio>`;
-      } else if (r.type === 'video') {
-        html += `<video controls src="${r.content}" style="width:100%; border-radius:6px;"></video>`;
-      } else {
-        html += `<div>Type non supporté</div>`;
+      
+      if (r.textContent) {
+        html += `<div class="response-text">${escapeHtml(r.textContent)}</div>`;
       }
+      
+      if (r.type === 'image') {
+        html += `<div class="response-media"><img src="${r.content}" alt="Image envoyée" style="max-width:100%; border-radius:6px;"></div>`;
+      } else if (r.type === 'audio') {
+        html += `<div class="response-media"><audio controls src="${r.content}" style="width:100%;"></audio></div>`;
+      } else if (r.type === 'video') {
+        html += `<div class="response-media"><video controls src="${r.content}" style="width:100%; border-radius:6px;"></video></div>`;
+      }
+      
+      html += `<button class="delete-btn" onclick="deleteResponse(${r.id})">×</button>`;
       html += '</div>';
     });
+    
     html += '</div>';
     responsesContainer.innerHTML = html;
   }
-
-  // Pour éviter les injections XSS dans le texte saisi
+  
+  function deleteResponse(id) {
+    if (confirm('Voulez-vous vraiment supprimer cette réponse ?')) {
+      responses = responses.filter(r => r.id !== id);
+      saveResponses();
+      renderResponses();
+    }
+  }
+  
+  // Éviter les injections XSS
   function escapeHtml(text) {
     const div = document.createElement('div');
     div.textContent = text;
     return div.innerHTML;
   }
-
-
-
-
+  
+  // Gestion du bouton d'effacement
+  clearResponsesBtn.addEventListener('click', function() {
+    if (confirm('Voulez-vous vraiment supprimer TOUTES les réponses ? Cette action est irréversible.')) {
+      responses = [];
+      localStorage.removeItem('responses');
+      renderResponses();
+    }
+  });
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
