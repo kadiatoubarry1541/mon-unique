@@ -824,8 +824,8 @@
                 <div class="media-container"><img src="apres/20230507_151958-1.jpg" alt="Après 3"></div>
                 <div class="media-container"><img src="apres/20230507_130427.jpg" alt="Après 4"></div>
                 <div class="media-container"><img src="apres/20230514_181118.jpg" alt="Après 5"></div>
-                <div class="media-container"><video controls preload="metadata"><source src="/Video_20250809_113747.mp4" type="video/mp4">Votre navigateur ne supporte pas la vidéo.</video></div>
-                <div class="media-container"><video controls preload="metadata"><source src="/Video_20250523_112832.mp4" type="video/mp4">Votre navigateur ne supporte pas la vidéo.</video></div>
+                <div class="media-container"><video controls preload="metadata"><source src="Video_20250809_113747.mp4" type="video/mp4">Votre navigateur ne supporte pas la vidéo.</video></div>
+                <div class="media-container"><video controls preload="metadata"><source src="Video_20250523_112832.mp4" type="video/mp4">Votre navigateur ne supporte pas la vidéo.</video></div>
                 <div class="media-container" style="grid-column:1/-1">
                     <audio controls preload="metadata"><source src="apres/11.m4a" type="audio/mpeg">Votre navigateur ne supporte pas l'audio.</audio>
                 </div>
@@ -904,409 +904,688 @@
         </div>
 
 
-<!DOCTYPE html>
+
+    <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Application de Publication</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-       
+    <title>Mon Site de Médias</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .upload-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            margin-bottom: 30px;
+        }
+        
+        .upload-box {
+            border: 3px dashed #a777e3;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            background: #f8f6ff;
+            transition: all 0.3s;
+            margin-bottom: 20px;
+        }
+        
+        .upload-box:hover {
+            background: #f0edff;
+            border-color: #6e8efb;
+        }
+        
+        .upload-box i {
+            font-size: 4rem;
+            color: #a777e3;
+            margin-bottom: 15px;
+        }
+        
+        .upload-box h3 {
+            margin-bottom: 15px;
+            color: #555;
+        }
+        
+        .file-input {
+            display: none;
+        }
+        
+        .file-label {
+            display: inline-block;
+            background: #6e8efb;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(110, 142, 251, 0.4);
+        }
+        
+        .file-label:hover {
+            background: #5a7dfa;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(110, 142, 251, 0.5);
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+        
+        .filter-controls {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .filter-btn {
+            padding: 8px 15px;
+            background: #f0edff;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        
+        .filter-btn.active {
+            background: #6e8efb;
+            color: white;
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            padding: 10px;
+        }
+        
+        .media-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .media-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.18);
+        }
+        
+        .media-content {
+            height: 220px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8f9fa;
+            overflow: hidden;
+        }
+        
+        .media-content img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .media-content video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .media-content audio {
+            width: 100%;
+        }
+        
+        .media-info {
+            padding: 15px;
+        }
+        
+        .media-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #444;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .media-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #777;
+            font-size: 0.85rem;
+        }
+        
+        .media-controls {
+            padding: 10px 15px;
+            background: #f8f6ff;
+            display: flex;
+            justify-content: flex-end;
+        }
+        
+        .delete-btn {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 6px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        
+        .delete-btn:hover {
+            background: #ff5252;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 50px 0;
+            color: #666;
+            font-size: 1.2rem;
+            grid-column: 1 / -1;
+        }
+        
+        .storage-info {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .progress-bar {
+            height: 12px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            flex-grow: 1;
+            margin: 0 15px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #6e8efb, #a777e3);
+            border-radius: 10px;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        .storage-text {
+            font-weight: 500;
+            color: #555;
+            min-width: 120px;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #4CAF50;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transform: translateX(120%);
+            transition: transform 0.4s ease;
+            z-index: 1000;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        @media (max-width: 768px) {
+            .gallery {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            }
+            
+            .controls {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .gallery {
+                grid-template-columns: 1fr;
+            }
+            
+            .upload-box {
+                padding: 20px 10px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- Application de publication encapsulée -->
-    <div class="publication-app">
-        <div class="app-header">
-            <h1 class="app-title"><i class="fas fa-video"></i> Publication de Médias Lourds</h1>
-            <p class="app-subtitle">Publiez vos vidéos et audios avec des messages détaillés</p>
-        </div>
+    <div class="container">
+        <header>
+            <h1>Nos souvenirs</h1>
+            <p>mon coeur Publi et gére nos vidéos, audios et photos</p>
+        </header>
         
-        <div class="app-content">
-            <div class="section video-section">
-                <div class="section-header">
-                    <i class="fas fa-film section-icon"></i>
-                    <h2 class="section-title">Téléverser un média</h2>
+        <main>
+            <section class="upload-section">
+                <div class="upload-box" id="dropZone">
+                    <i>📁</i>
+                    <h3>dépose tes fichiers ici</h3>
+                    <p>ou</p>
+                    <label for="mediaInput" class="file-label">Sélectionner des fichiers</label>
+                    <input type="file" id="mediaInput" accept="image/*,video/*,audio/*" multiple class="file-input">
                 </div>
-                
-                <div class="upload-area" id="uploadArea">
-                    <i class="fas fa-cloud-upload-alt upload-icon"></i>
-                    <h3 class="upload-text">Déposez votre vidéo ou audio ici</h3>
-                    <p class="upload-subtext">Formats supportés: MP4, AVI, MOV, MP3, WAV</p>
-                    <button class="btn btn-primary">
-                        <i class="fas fa-folder-open"></i> Sélectionner un fichier
-                    </button>
-                    <input type="file" id="mediaInput" accept="video/*,audio/*" style="display: none;">
-                </div>
-                
-                <div class="file-info" id="fileInfo">
-                    <div class="file-info-content">
-                        <div>
-                            <span>Nom du fichier</span>
-                            <strong id="fileName">media.mp4</strong>
-                        </div>
-                        <div>
-                            <span>Taille</span>
-                            <strong id="fileSize">1.2 GB</strong>
-                        </div>
-                        <div>
-                            <span>Type</span>
-                            <strong id="fileType">MP4</strong>
-                        </div>
-                    </div>
-                </div>
-                
-                <video class="media-preview" id="videoPreview" controls style="display: none;"></video>
-                <audio class="media-preview" id="audioPreview" controls style="display: none;"></audio>
                 
                 <div class="controls">
-                    <button class="btn btn-primary" id="processBtn" style="display: none;">
-                        <i class="fas fa-cogs"></i> Préparer
-                    </button>
-                    <button class="btn btn-secondary" id="cancelBtn" style="display: none;">
-                        <i class="fas fa-times"></i> Annuler
-                    </button>
+                    <div class="filter-controls">
+                        <button class="filter-btn active" data-filter="all">Tous</button>
+                        <button class="filter-btn" data-filter="image">Photos</button>
+                        <button class="filter-btn" data-filter="video">Vidéos</button>
+                        <button class="filter-btn" data-filter="audio">Audios</button>
+                    </div>
+                    <div class="storage-text" id="storageText">
+                        Stockage: 0 Mo / 500 Mo
+                    </div>
                 </div>
-            </div>
+            </section>
             
-            <div class="section message-section">
-                <div class="section-header">
-                    <i class="fas fa-comment-alt section-icon"></i>
-                    <h2 class="section-title">Votre message</h2>
+            <section class="gallery" id="mediaGallery">
+                <div class="empty-state" id="emptyState">
+                    <p>Aucun média publié pour le moment</p>
+                    <p>Sélectionnez ou glissez-déposez des fichiers pour commencer</p>
                 </div>
-                
-                <div class="counter">
-                    <span id="lineCount">0</span> lignes (jusqu'à 30 lignes)
-                </div>
-                
-                <textarea class="message-area" id="messageInput" placeholder="Écrivez votre message ici... (vous pouvez écrire jusqu'à 30 lignes)" rows="15"></textarea>
-                
-                <button class="btn btn-secondary" id="saveDraftBtn">
-                    <i class="fas fa-save"></i> Enregistrer brouillon
-                </button>
-            </div>
-        </div>
-        
-        <div class="publish-section">
-            <button class="publish-btn" id="publishBtn">
-                <i class="fas fa-paper-plane"></i> Publier Maintenant
-            </button>
-        </div>
-        
-        <div class="confirmation" id="confirmation">
-            <i class="fas fa-check-circle confirmation-icon"></i>
-            <h2>Publication réussie !</h2>
-            <p>Votre média et votre message ont été publiés avec succès.</p>
-            <p>Votre publication restera visible même si vous fermez la page.</p>
-        </div>
-        
-        <div class="publications-container">
-            <div class="publications-header">
-                <i class="fas fa-book publications-icon"></i>
-                <h2 class="publications-title">Mes Publications</h2>
-            </div>
+            </section>
             
-            <div class="publications-list" id="publicationsList">
-                <div class="no-publications" id="noPublications">
-                    <i class="fas fa-info-circle"></i>
-                    <p>Aucune publication pour le moment</p>
-                    <p>Créez votre première publication ci-dessus</p>
+            <div class="storage-info">
+                <span>Espace de stockage:</span>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
                 </div>
+                <span id="storagePercent">0%</span>
             </div>
-        </div>
+        </main>
     </div>
     
     <div class="notification" id="notification">
-        <i class="fas fa-check-circle"></i> Votre brouillon a été enregistré avec succès !
+        Fichier ajouté avec succès!
     </div>
 
     <script>
+        // Configuration de la base de données
+        const DB_NAME = 'MediaDatabase';
+        const STORE_NAME = 'media';
+        const MAX_STORAGE_MB = 500; // Limite de stockage de 500 Mo
+        let db;
+        
         // Éléments DOM
         const mediaInput = document.getElementById('mediaInput');
-        const uploadArea = document.getElementById('uploadArea');
-        const fileInfo = document.getElementById('fileInfo');
-        const fileName = document.getElementById('fileName');
-        const fileSize = document.getElementById('fileSize');
-        const fileType = document.getElementById('fileType');
-        const videoPreview = document.getElementById('videoPreview');
-        const audioPreview = document.getElementById('audioPreview');
-        const processBtn = document.getElementById('processBtn');
-        const cancelBtn = document.getElementById('cancelBtn');
-        const messageInput = document.getElementById('messageInput');
-        const lineCount = document.getElementById('lineCount');
-        const saveDraftBtn = document.getElementById('saveDraftBtn');
-        const publishBtn = document.getElementById('publishBtn');
-        const confirmation = document.getElementById('confirmation');
-        const publicationsList = document.getElementById('publicationsList');
-        const noPublications = document.getElementById('noPublications');
+        const mediaGallery = document.getElementById('mediaGallery');
+        const emptyState = document.getElementById('emptyState');
+        const dropZone = document.getElementById('dropZone');
         const notification = document.getElementById('notification');
+        const storageText = document.getElementById('storageText');
+        const progressFill = document.getElementById('progressFill');
+        const storagePercent = document.getElementById('storagePercent');
+        const filterButtons = document.querySelectorAll('.filter-btn');
         
-        // Variables pour stocker le média sélectionné
-        let selectedMedia = null;
-        
-        // Écouteurs d'événements
-        uploadArea.addEventListener('click', () => {
-            mediaInput.click();
-        });
-        
-        mediaInput.addEventListener('change', handleMediaUpload);
-        processBtn.addEventListener('click', processMedia);
-        cancelBtn.addEventListener('click', cancelUpload);
-        messageInput.addEventListener('input', updateLineCount);
-        saveDraftBtn.addEventListener('click', saveDraft);
-        publishBtn.addEventListener('click', publishContent);
-        
-        // Fonctions
-        function handleMediaUpload(e) {
-            const file = e.target.files[0];
-            if (!file) return;
-            
-            // Vérification du type de fichier
-            const isVideo = file.type.includes('video');
-            const isAudio = file.type.includes('audio');
-            
-            if (!isVideo && !isAudio) {
-                showNotification('Veuillez sélectionner un fichier vidéo ou audio valide.');
-                return;
-            }
-            
-            selectedMedia = file;
-            
-            // Mise à jour de l'UI
-            fileName.textContent = file.name;
-            fileSize.textContent = formatFileSize(file.size);
-            fileType.textContent = isVideo ? 'VIDÉO' : 'AUDIO';
-            
-            fileInfo.style.display = 'block';
-            processBtn.style.display = 'block';
-            cancelBtn.style.display = 'block';
-            
-            // Aperçu du média
-            const mediaURL = URL.createObjectURL(file);
-            
-            if (isVideo) {
-                videoPreview.src = mediaURL;
-                videoPreview.style.display = 'block';
-                audioPreview.style.display = 'none';
-            } else {
-                audioPreview.src = mediaURL;
-                audioPreview.style.display = 'block';
-                videoPreview.style.display = 'none';
-            }
-        }
-        
-        function formatFileSize(bytes) {
-            if (bytes < 1024) return bytes + ' bytes';
-            else if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
-            else if (bytes < 1073741824) return (bytes / 1048576).toFixed(1) + ' MB';
-            else return (bytes / 1073741824).toFixed(1) + ' GB';
-        }
-        
-        function processMedia() {
-            showNotification('Votre média est prêt pour la publication !');
-            publishBtn.disabled = false;
-        }
-        
-        function cancelUpload() {
-            mediaInput.value = '';
-            fileInfo.style.display = 'none';
-            videoPreview.style.display = 'none';
-            audioPreview.style.display = 'none';
-            processBtn.style.display = 'none';
-            cancelBtn.style.display = 'none';
-            selectedMedia = null;
-        }
-        
-        function updateLineCount() {
-            const text = messageInput.value;
-            const lines = text.split(/\r*\n/).length;
-            lineCount.textContent = lines;
-            
-            // Limiter à 30 lignes
-            if (lines > 30) {
-                const truncated = text.split(/\r*\n/).slice(0, 30).join('\n');
-                messageInput.value = truncated;
-                lineCount.textContent = '30';
-                lineCount.style.color = '#ff6b6b';
+        // Initialiser la base de données
+        function initDB() {
+            return new Promise((resolve, reject) => {
+                const request = indexedDB.open(DB_NAME, 1);
                 
-                // Afficher une notification
-                showNotification('Votre message a été limité à 30 lignes maximum.');
-            } else {
-                lineCount.style.color = '#fff';
-            }
+                request.onupgradeneeded = (event) => {
+                    db = event.target.result;
+                    if (!db.objectStoreNames.contains(STORE_NAME)) {
+                        db.createObjectStore(STORE_NAME, { keyPath: 'id' });
+                    }
+                };
+                
+                request.onsuccess = (event) => {
+                    db = event.target.result;
+                    resolve();
+                    updateStorageInfo();
+                    loadMedia();
+                };
+                
+                request.onerror = (event) => {
+                    reject('Erreur IndexedDB: ' + event.target.error);
+                };
+            });
         }
         
-        function saveDraft() {
-            // Sauvegarde du brouillon dans le localStorage
-            const draft = {
-                message: messageInput.value,
-                media: selectedMedia ? {
-                    name: selectedMedia.name,
-                    size: selectedMedia.size,
-                    type: selectedMedia.type
-                } : null
+        // Charger tous les médias
+        function loadMedia(filter = 'all') {
+            const transaction = db.transaction([STORE_NAME], 'readonly');
+            const store = transaction.objectStore(STORE_NAME);
+            const request = store.getAll();
+            
+            request.onsuccess = () => {
+                const mediaItems = request.result;
+                renderGallery(mediaItems, filter);
+                
+                if (mediaItems.length === 0) {
+                    emptyState.style.display = 'block';
+                } else {
+                    emptyState.style.display = 'none';
+                }
             };
-            
-            localStorage.setItem('mediaMessageDraft', JSON.stringify(draft));
-            showNotification('Votre brouillon a été enregistré avec succès !');
         }
         
-        function publishContent() {
-            // Vérifier qu'un média est sélectionné
-            if (!selectedMedia) {
-                showNotification('Veuillez sélectionner un média à publier.');
+        // Afficher la galerie
+        function renderGallery(mediaItems, filter) {
+            mediaGallery.innerHTML = '';
+            
+            if (mediaItems.length === 0) {
+                emptyState.style.display = 'block';
                 return;
             }
             
-            // Vérifier que le message n'est pas vide
-            if (messageInput.value.trim() === '') {
-                showNotification('Veuillez écrire un message à publier.');
-                return;
-            }
+            emptyState.style.display = 'none';
             
-            // Sauvegarder la publication
-            savePublication();
+            // Filtrer les éléments selon le type
+            const filteredItems = filter === 'all' 
+                ? mediaItems 
+                : mediaItems.filter(item => item.type === filter);
             
-            // Afficher la confirmation
-            confirmation.style.display = 'block';
-            
-            // Réinitialiser le formulaire
-            cancelUpload();
-            messageInput.value = '';
-            updateLineCount();
-            
-            // Faire défiler jusqu'à la confirmation
-            confirmation.scrollIntoView({ behavior: 'smooth' });
-        }
-        
-        function savePublication() {
-            // Créer l'objet publication
-            const publication = {
-                id: Date.now(),
-                date: new Date().toISOString(),
-                media: {
-                    name: selectedMedia.name,
-                    size: selectedMedia.size,
-                    type: selectedMedia.type,
-                    url: URL.createObjectURL(selectedMedia)
-                },
-                message: messageInput.value
-            };
-            
-            // Récupérer les publications existantes
-            let publications = JSON.parse(localStorage.getItem('publications')) || [];
-            
-            // Ajouter la nouvelle publication
-            publications.unshift(publication);
-            
-            // Sauvegarder dans le localStorage
-            localStorage.setItem('publications', JSON.stringify(publications));
-            
-            // Mettre à jour l'affichage
-            displayPublications();
-        }
-        
-        function displayPublications() {
-            // Récupérer les publications
-            const publications = JSON.parse(localStorage.getItem('publications')) || [];
-            
-            // Vérifier s'il y a des publications
-            if (publications.length === 0) {
-                noPublications.style.display = 'block';
-                publicationsList.innerHTML = '';
-                return;
-            }
-            
-            noPublications.style.display = 'none';
-            
-            // Générer le HTML des publications
-            let html = '';
-            publications.forEach(pub => {
-                const date = new Date(pub.date);
-                const formattedDate = date.toLocaleDateString('fr-FR', {
-                    day: '2-digit',
-                    month: '2-digit',
-                    year: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit'
-                });
-                
-                const isVideo = pub.media.type.includes('video');
-                
-                html += `
-                <div class="publication" data-id="${pub.id}">
-                    <div class="publication-header">
-                        <i class="fas ${isVideo ? 'fa-video' : 'fa-music'} publication-icon"></i>
-                        <div>
-                            <h3>Publication ${isVideo ? 'vidéo' : 'audio'}</h3>
-                            <div class="publication-date">${formattedDate}</div>
-                        </div>
+            if (filteredItems.length === 0) {
+                mediaGallery.innerHTML = `
+                    <div class="empty-state">
+                        <p>Aucun ${getFilterLabel(filter)} trouvé</p>
                     </div>
-                    
-                    <div class="publication-content">
-                        <div class="publication-text">${pub.message}</div>
-                        <div class="file-info-content">
-                            <div>
-                                <span>Nom du fichier</span>
-                                <strong>${pub.media.name}</strong>
-                            </div>
-                            <div>
-                                <span>Taille</span>
-                                <strong>${formatFileSize(pub.media.size)}</strong>
-                            </div>
-                        </div>
-                        ${isVideo ? 
-                          `<video class="publication-media" src="${pub.media.url}" controls></video>` : 
-                          `<audio class="publication-media" src="${pub.media.url}" controls></audio>`
-                        }
+                `;
+                return;
+            }
+            
+            // Afficher les éléments filtrés
+            filteredItems.forEach(media => {
+                const mediaCard = createMediaCard(media);
+                mediaGallery.appendChild(mediaCard);
+            });
+        }
+        
+        // Créer une carte média
+        function createMediaCard(media) {
+            const card = document.createElement('div');
+            card.className = 'media-card';
+            card.dataset.id = media.id;
+            card.dataset.type = media.type;
+            
+            let mediaContent = '';
+            if (media.type === 'image') {
+                mediaContent = `<img src="${media.url}" alt="${media.name}">`;
+            } else if (media.type === 'video') {
+                mediaContent = `
+                    <video controls>
+                        <source src="${media.url}" type="${media.mimeType}">
+                        Votre navigateur ne supporte pas les vidéos.
+                    </video>
+                `;
+            } else if (media.type === 'audio') {
+                mediaContent = `
+                    <audio controls>
+                        <source src="${media.url}" type="${media.mimeType}">
+                        Votre navigateur ne supporte pas les audios.
+                    </audio>
+                `;
+            }
+            
+            card.innerHTML = `
+                <div class="media-content">
+                    ${mediaContent}
+                </div>
+                <div class="media-info">
+                    <div class="media-title">${media.name}</div>
+                    <div class="media-meta">
+                        <span>${formatFileSize(media.size)}</span>
+                        <span>${formatDate(media.date)}</span>
                     </div>
                 </div>
-                `;
-            });
+                <div class="media-controls">
+                    <button class="delete-btn" onclick="deleteMedia('${media.id}')">Supprimer</button>
+                </div>
+            `;
             
-            publicationsList.innerHTML = html;
+            return card;
         }
         
+        // Ajouter un média
+        function addMedia(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                
+                reader.onload = (event) => {
+                    const media = {
+                        id: Date.now() + '-' + Math.random().toString(36).substr(2, 9),
+                        name: file.name,
+                        type: file.type.split('/')[0],
+                        mimeType: file.type,
+                        size: file.size,
+                        date: new Date().toISOString(),
+                        file: file,
+                        url: URL.createObjectURL(file)
+                    };
+                    
+                    const transaction = db.transaction([STORE_NAME], 'readwrite');
+                    const store = transaction.objectStore(STORE_NAME);
+                    store.add(media);
+                    
+                    transaction.oncomplete = () => {
+                        resolve(media);
+                        showNotification('Fichier ajouté avec succès!');
+                        updateStorageInfo();
+                        loadMedia();
+                    };
+                    
+                    transaction.onerror = (event) => {
+                        reject('Erreur lors de l\'ajout: ' + event.target.error);
+                    };
+                };
+                
+                reader.readAsArrayBuffer(file);
+            });
+        }
+        
+        // Supprimer un média
+        window.deleteMedia = function(id) {
+            const transaction = db.transaction([STORE_NAME], 'readwrite');
+            const store = transaction.objectStore(STORE_NAME);
+            
+            // Récupérer l'élément pour libérer l'URL
+            const getRequest = store.get(id);
+            
+            getRequest.onsuccess = () => {
+                const media = getRequest.result;
+                if (media) {
+                    URL.revokeObjectURL(media.url);
+                }
+                
+                // Supprimer de la base de données
+                store.delete(id);
+                
+                transaction.oncomplete = () => {
+                    showNotification('Fichier supprimé avec succès!');
+                    updateStorageInfo();
+                    loadMedia();
+                };
+            };
+        }
+        
+        // Mettre à jour les informations de stockage
+        async function updateStorageInfo() {
+            const transaction = db.transaction([STORE_NAME], 'readonly');
+            const store = transaction.objectStore(STORE_NAME);
+            const request = store.getAll();
+            
+            request.onsuccess = () => {
+                const mediaItems = request.result;
+                let totalSize = 0;
+                
+                mediaItems.forEach(media => {
+                    totalSize += media.size;
+                });
+                
+                const totalMB = (totalSize / (1024 * 1024)).toFixed(2);
+                const maxMB = MAX_STORAGE_MB;
+                const percent = Math.min(100, (totalMB / maxMB) * 100);
+                
+                storageText.textContent = `Stockage: ${totalMB} Mo / ${maxMB} Mo`;
+                progressFill.style.width = `${percent}%`;
+                storagePercent.textContent = `${percent.toFixed(1)}%`;
+                
+                // Changer la couleur si le stockage est presque plein
+                if (percent > 90) {
+                    progressFill.style.background = 'linear-gradient(90deg, #ff6b6b, #ff5252)';
+                } else {
+                    progressFill.style.background = 'linear-gradient(90deg, #6e8efb, #a777e3)';
+                }
+            };
+        }
+        
+        // Afficher une notification
         function showNotification(message) {
-            notification.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
-            notification.style.display = 'block';
+            notification.textContent = message;
+            notification.classList.add('show');
             
             setTimeout(() => {
-                notification.style.display = 'none';
+                notification.classList.remove('show');
             }, 3000);
         }
         
-        // Initialisation
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initialiser le compteur de lignes
-            updateLineCount();
-            
-            // Désactiver le bouton de publication initialement
-            publishBtn.disabled = true;
-            
-            // Charger le brouillon s'il existe
-            const draft = JSON.parse(localStorage.getItem('mediaMessageDraft'));
-            if (draft) {
-                messageInput.value = draft.message || '';
-                updateLineCount();
-                
-                if (draft.media) {
-                    fileName.textContent = draft.media.name;
-                    fileSize.textContent = formatFileSize(draft.media.size);
-                    fileType.textContent = draft.media.type.includes('video') ? 'VIDÉO' : 'AUDIO';
-                    fileInfo.style.display = 'block';
-                    
-                    // Note: On ne peut pas restaurer l'aperçu sans le fichier
-                    showNotification('Brouillon chargé. Veuillez re-sélectionner le média pour l\'aperçu.');
-                }
+        // Formater la taille du fichier
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+        
+        // Formater la date
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('fr-FR', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            });
+        }
+        
+        // Obtenir le label du filtre
+        function getFilterLabel(filter) {
+            switch (filter) {
+                case 'image': return 'photo';
+                case 'video': return 'vidéo';
+                case 'audio': return 'audio';
+                default: return 'média';
             }
-            
-            // Afficher les publications existantes
-            displayPublications();
+        }
+        
+        // Initialisation de l'application
+        window.addEventListener('DOMContentLoaded', async () => {
+            try {
+                await initDB();
+                
+                // Événements de sélection de fichier
+                mediaInput.addEventListener('change', (e) => {
+                    for (const file of e.target.files) {
+                        addMedia(file).catch(error => {
+                            console.error('Erreur:', error);
+                            showNotification('Erreur: ' + error);
+                        });
+                    }
+                    mediaInput.value = '';
+                });
+                
+                // Glisser-déposer
+                dropZone.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    dropZone.style.borderColor = '#6e8efb';
+                    dropZone.style.backgroundColor = '#f0edff';
+                });
+                
+                dropZone.addEventListener('dragleave', () => {
+                    dropZone.style.borderColor = '#a777e3';
+                    dropZone.style.backgroundColor = '#f8f6ff';
+                });
+                
+                dropZone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    dropZone.style.borderColor = '#a777e3';
+                    dropZone.style.backgroundColor = '#f8f6ff';
+                    
+                    for (const file of e.dataTransfer.files) {
+                        if (file.type.startsWith('image/') || 
+                            file.type.startsWith('video/') || 
+                            file.type.startsWith('audio/')) {
+                            addMedia(file).catch(error => {
+                                console.error('Erreur:', error);
+                                showNotification('Erreur: ' + error);
+                            });
+                        }
+                    }
+                });
+                
+                // Filtres
+                filterButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        filterButtons.forEach(btn => btn.classList.remove('active'));
+                        button.classList.add('active');
+                        loadMedia(button.dataset.filter);
+                    });
+                });
+                
+            } catch (error) {
+                console.error('Erreur d\'initialisation:', error);
+                showNotification('Erreur: ' + error);
+            }
         });
     </script>
 </body>
 </html>
+
+
+
+
+
+    
 
       
         
@@ -2191,6 +2470,7 @@
 
 </body>
 </html>
+
 
 
 
