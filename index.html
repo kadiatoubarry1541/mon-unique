@@ -875,42 +875,16 @@
             <h2>Réponds-moi ❤️</h2>
             <p>Tu peux m’écrire un petit message ou m’envoyer une photo, une vidéo ou un audio directement ici mais de petite taille :</p>
 
-            <form id="responseForm">
-                <div class="form-group">
-                    <label for="userName">Ecris-moi le nom que tu aime le plus.</label>
-                    <input type="text" id="userName" placeholder="Par quel nom veux tu que je t'appelle ?" class="form-input">
-                </div>
-                
-                <div class="form-group">
-                    <textarea id="textResponse" placeholder="Écris ta réponse ici..." rows="4" class="form-textarea"></textarea>
-                </div>
-
-                <div class="file-input-wrapper">
-                    <label class="file-input-label">❤️Choisis un fichier (photo, audio, vidéo)</label>
-                    <input type="file" id="mediaInput" accept="image/*,audio/*,video/*" />
-                </div>
-
-                <div class="response-actions">
-                    <button type="submit" class="btn"><i class="fas fa-paper-plane"></i> Envoyer le message</button>
-                    <button type="button" class="btn" id="clearResponses" style="background:#888;"><i class="fas fa-trash"></i> Effacer toutes les réponses</button>
-                </div>
-            </form>
-
-            <div class="confirmation-message" id="confirmationMessage"></div>
-
-            <div id="responsesContainer">
-                <div class="no-responses" id="noResponsesMessage">Aucune réponse pour le moment. Sois le premier à réagir !</div>
-            </div>
-        </div>
 
 
 
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mon Site de Médias</title>
+    <title>Mon Site de Médias Persistants</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -920,8 +894,8 @@
         }
         
         body {
-            background: linear-gradient(135deg, #6e8efb, #a777e3);
-            color: #333;
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
+            color: #fff;
             min-height: 100vh;
             padding: 20px;
         }
@@ -929,52 +903,72 @@
         .container {
             max-width: 1200px;
             margin: 0 auto;
+            background: rgba(30, 30, 50, 0.9);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
         }
         
         header {
             text-align: center;
-            padding: 30px 0;
-            color: white;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            padding: 40px 20px;
+            background: rgba(20, 20, 40, 0.8);
+            border-bottom: 3px solid #ffd700;
         }
         
         h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            color: #ffd700;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            color: #e0e0e0;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
         }
         
         .upload-section {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            margin-bottom: 30px;
+            padding: 40px;
+            background: rgba(25, 25, 45, 0.8);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .upload-box {
-            border: 3px dashed #a777e3;
-            border-radius: 10px;
-            padding: 30px;
+            border: 3px dashed #ffd700;
+            border-radius: 15px;
+            padding: 40px;
             text-align: center;
-            background: #f8f6ff;
+            background: rgba(0, 0, 0, 0.3);
             transition: all 0.3s;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
         
         .upload-box:hover {
-            background: #f0edff;
-            border-color: #6e8efb;
+            background: rgba(0, 0, 0, 0.5);
+            border-color: #4CAF50;
         }
         
         .upload-box i {
-            font-size: 4rem;
-            color: #a777e3;
-            margin-bottom: 15px;
+            font-size: 4.5rem;
+            color: #ffd700;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
         }
         
         .upload-box h3 {
+            font-size: 1.8rem;
             margin-bottom: 15px;
-            color: #555;
+            color: #fff;
+        }
+        
+        .upload-box p {
+            color: #bbb;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
         }
         
         .file-input {
@@ -983,216 +977,400 @@
         
         .file-label {
             display: inline-block;
-            background: #6e8efb;
+            background: linear-gradient(to right, #4CAF50, #2E7D32);
             color: white;
-            padding: 12px 25px;
+            padding: 15px 35px;
             border-radius: 50px;
             cursor: pointer;
             font-weight: 600;
+            font-size: 1.2rem;
             transition: all 0.3s;
-            box-shadow: 0 4px 10px rgba(110, 142, 251, 0.4);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
         
         .file-label:hover {
-            background: #5a7dfa;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(110, 142, 251, 0.5);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            background: linear-gradient(to right, #45a049, #1B5E20);
         }
         
-        .controls {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 20px;
+        .file-label i {
+            margin-right: 10px;
+            font-size: 1.3rem;
         }
         
-        .filter-controls {
-            display: flex;
-            gap: 10px;
+        .file-info {
+            margin: 20px 0;
+            font-size: 1rem;
+            color: #aaa;
         }
         
-        .filter-btn {
-            padding: 8px 15px;
-            background: #f0edff;
-            border: none;
-            border-radius: 30px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: all 0.2s;
-        }
-        
-        .filter-btn.active {
-            background: #6e8efb;
-            color: white;
-        }
-        
-        .gallery {
+        .media-details {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: 1fr 1fr;
             gap: 25px;
-            padding: 10px;
+            margin-top: 25px;
         }
         
-        .media-card {
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-            transition: all 0.3s ease;
-            position: relative;
+        .form-group {
+            margin-bottom: 25px;
         }
         
-        .media-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 25px rgba(0,0,0,0.18);
-        }
-        
-        .media-content {
-            height: 220px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #f8f9fa;
-            overflow: hidden;
-        }
-        
-        .media-content img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .media-content video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .media-content audio {
-            width: 100%;
-        }
-        
-        .media-info {
-            padding: 15px;
-        }
-        
-        .media-title {
+        .form-group label {
+            display: block;
+            margin-bottom: 12px;
             font-weight: 600;
-            margin-bottom: 5px;
-            color: #444;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        
-        .media-meta {
-            display: flex;
-            justify-content: space-between;
-            color: #777;
-            font-size: 0.85rem;
-        }
-        
-        .media-controls {
-            padding: 10px 15px;
-            background: #f8f6ff;
-            display: flex;
-            justify-content: flex-end;
-        }
-        
-        .delete-btn {
-            background: #ff6b6b;
-            color: white;
-            border: none;
-            padding: 6px 15px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: all 0.2s;
-        }
-        
-        .delete-btn:hover {
-            background: #ff5252;
-        }
-        
-        .empty-state {
-            text-align: center;
-            padding: 50px 0;
-            color: #666;
             font-size: 1.2rem;
-            grid-column: 1 / -1;
+            color: #ffd700;
+        }
+        
+        .form-input, textarea {
+            width: 100%;
+            padding: 15px;
+            border-radius: 10px;
+            border: none;
+            font-size: 1.1rem;
+            background: rgba(0, 0, 0, 0.4);
+            color: white;
+            border: 2px solid #4CAF50;
+        }
+        
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .publish-btn {
+            width: 100%;
+            padding: 18px;
+            font-size: 1.3rem;
+            background: linear-gradient(to right, #2196F3, #0D47A1);
+            margin-top: 15px;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .publish-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            background: linear-gradient(to right, #1E88E5, #0D47A1);
+        }
+        
+        .preview-container {
+            margin: 30px 0;
+            display: none;
+        }
+        
+        .preview-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+            color: #ffd700;
+            text-align: center;
+        }
+        
+        .preview-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+        }
+        
+        .preview-content video, .preview-content img {
+            max-width: 100%;
+            max-height: 400px;
+            border-radius: 10px;
+            background: #000;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        .preview-content audio {
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        .media-type-indicator {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            z-index: 10;
         }
         
         .storage-info {
-            background: white;
-            border-radius: 10px;
-            padding: 15px;
-            margin-top: 25px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            text-align: center;
         }
         
-        .progress-bar {
-            height: 12px;
-            background: #e0e0e0;
-            border-radius: 10px;
-            flex-grow: 1;
-            margin: 0 15px;
+        .storage-header {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: #ffd700;
+        }
+        
+        .progress-container {
+            width: 100%;
+            height: 25px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
             overflow: hidden;
+            margin: 15px 0;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
         }
         
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, #6e8efb, #a777e3);
-            border-radius: 10px;
+            background: linear-gradient(90deg, #4CAF50, #2E7D32);
+            border-radius: 15px;
             width: 0%;
-            transition: width 0.5s ease;
+            transition: width 1s ease;
+            box-shadow: 0 0 20px rgba(76, 175, 80, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 15px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
         }
         
         .storage-text {
+            font-size: 1.1rem;
+            color: #bbb;
+        }
+        
+        .published-media {
+            padding: 40px;
+            background: rgba(20, 20, 40, 0.7);
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: #ffd700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .media-item {
+            background: rgba(30, 30, 50, 0.9);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            transition: all 0.4s ease;
+            border: 2px solid transparent;
+            position: relative;
+        }
+        
+        .media-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+            border-color: #ffd700;
+        }
+        
+        .media-header {
+            padding: 20px;
+            background: rgba(40, 40, 60, 0.9);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .media-title {
+            font-weight: 700;
+            font-size: 1.4rem;
+            margin-bottom: 8px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: #ffd700;
+        }
+        
+        .media-date {
+            color: #aaa;
+            font-size: 0.95rem;
+        }
+        
+        .media-content {
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 250px;
+            background: rgba(0, 0, 0, 0.4);
+            position: relative;
+        }
+        
+        .media-content video, .media-content img {
+            width: 100%;
+            max-height: 250px;
+            border-radius: 10px;
+            background: #000;
+            object-fit: contain;
+        }
+        
+        .media-content audio {
+            width: 100%;
+            max-width: 300px;
+        }
+        
+        .media-footer {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(40, 40, 60, 0.9);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .media-size {
+            color: #aaa;
             font-weight: 500;
-            color: #555;
-            min-width: 120px;
+        }
+        
+        .delete-btn {
+            background: linear-gradient(to right, #e74c3c, #c0392b);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .delete-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+        }
+        
+        .no-media {
+            text-align: center;
+            padding: 60px;
+            color: #777;
+            font-style: italic;
+            font-size: 1.2rem;
+            grid-column: 1 / -1;
         }
         
         .notification {
             position: fixed;
-            top: 20px;
-            right: 20px;
-            background: #4CAF50;
+            top: 30px;
+            right: 30px;
+            background: linear-gradient(to right, #4CAF50, #2E7D32);
             color: white;
-            padding: 15px 25px;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
             transform: translateX(120%);
-            transition: transform 0.4s ease;
+            transition: transform 0.5s ease;
             z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.1rem;
         }
         
         .notification.show {
             transform: translateX(0);
         }
         
-        @media (max-width: 768px) {
-            .gallery {
-                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        .notification.error {
+            background: linear-gradient(to right, #e74c3c, #c0392b);
+        }
+        
+        .type-selector {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .type-btn {
+            padding: 10px 20px;
+            border-radius: 50px;
+            background: rgba(0, 0, 0, 0.3);
+            color: #bbb;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+            font-weight: 600;
+        }
+        
+        .type-btn.active {
+            background: linear-gradient(to right, #2196F3, #0D47A1);
+            color: white;
+            border-color: #ffd700;
+        }
+        
+        .type-btn i {
+            margin-right: 8px;
+        }
+        
+        @media (max-width: 992px) {
+            .media-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             }
             
-            .controls {
-                flex-direction: column;
-                gap: 15px;
-                align-items: flex-start;
+            .media-details {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .upload-box {
+                padding: 30px 20px;
+            }
+            
+            .container {
+                margin: 10px;
+            }
+            
+            header {
+                padding: 30px 15px;
+            }
+            
+            .upload-section, .published-media {
+                padding: 30px 20px;
+            }
+            
+            .type-selector {
+                flex-wrap: wrap;
             }
         }
         
         @media (max-width: 480px) {
-            .gallery {
+            .media-grid {
                 grid-template-columns: 1fr;
             }
             
-            .upload-box {
-                padding: 20px 10px;
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
             }
         }
     </style>
@@ -1200,81 +1378,119 @@
 <body>
     <div class="container">
         <header>
-            <h1>Nos souvenirs</h1>
-            <p>mon coeur Publi et gére nos vidéos, audios et photos</p>
+            <h1><i class="fas fa-images"></i> Mon Site de Médias</h1>
+            <p class="subtitle">Publiez et consultez vos photos, vidéos et audios à tout moment - Stockage persistant garanti</p>
         </header>
         
-        <main>
-            <section class="upload-section">
-                <div class="upload-box" id="dropZone">
-                    <i>📁</i>
-                    <h3>dépose tes fichiers ici</h3>
-                    <p>ou</p>
-                    <label for="mediaInput" class="file-label">Sélectionner des fichiers</label>
-                    <input type="file" id="mediaInput" accept="image/*,video/*,audio/*" multiple class="file-input">
+        <section class="upload-section">
+            <div class="type-selector">
+                <div class="type-btn active" data-type="all">
+                    <i class="fas fa-images"></i> Tous
+                </div>
+                <div class="type-btn" data-type="photo">
+                    <i class="fas fa-camera"></i> Photos
+                </div>
+                <div class="type-btn" data-type="video">
+                    <i class="fas fa-video"></i> Vidéos
+                </div>
+                <div class="type-btn" data-type="audio">
+                    <i class="fas fa-music"></i> Audios
+                </div>
+            </div>
+            
+            <div class="upload-box" id="dropZone">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <h3>Déposez vos médias ici</h3>
+                <p>Vos photos, vidéos et audios resteront disponibles même après 10 jours!</p>
+                <label for="mediaInput" class="file-label">
+                    <i class="fas fa-folder-open"></i> Sélectionner un média
+                </label>
+                <input type="file" id="mediaInput" accept="image/*,video/*,audio/*" class="file-input">
+                <div class="file-info">
+                    Formats acceptés: JPG, PNG, GIF, MP4, WEBM, MOV, MP3, WAV | Taille maximale: <strong>500 Mo</strong>
+                </div>
+            </div>
+            
+            <div class="media-details">
+                <div class="form-group">
+                    <label for="mediaTitle"><i class="fas fa-heading"></i> Titre du média:</label>
+                    <input type="text" id="mediaTitle" placeholder="Titre descriptif" class="form-input">
                 </div>
                 
-                <div class="controls">
-                    <div class="filter-controls">
-                        <button class="filter-btn active" data-filter="all">Tous</button>
-                        <button class="filter-btn" data-filter="image">Photos</button>
-                        <button class="filter-btn" data-filter="video">Vidéos</button>
-                        <button class="filter-btn" data-filter="audio">Audios</button>
-                    </div>
-                    <div class="storage-text" id="storageText">
-                        Stockage: 0 Mo / 500 Mo
-                    </div>
+                <div class="form-group">
+                    <label for="mediaDescription"><i class="fas fa-align-left"></i> Description:</label>
+                    <textarea id="mediaDescription" placeholder="Décrivez votre média..." class="form-input"></textarea>
                 </div>
-            </section>
+            </div>
             
-            <section class="gallery" id="mediaGallery">
-                <div class="empty-state" id="emptyState">
-                    <p>Aucun média publié pour le moment</p>
-                    <p>Sélectionnez ou glissez-déposez des fichiers pour commencer</p>
-                </div>
-            </section>
+            <div class="preview-container" id="previewContainer">
+                <div class="preview-title">Aperçu de votre média:</div>
+                <div class="preview-content" id="previewContent"></div>
+            </div>
             
             <div class="storage-info">
-                <span>Espace de stockage:</span>
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progressFill"></div>
+                <div class="storage-header">
+                    <i class="fas fa-database"></i> Espace de stockage utilisé
                 </div>
-                <span id="storagePercent">0%</span>
+                <div class="progress-container">
+                    <div class="progress-fill" id="progressFill">0%</div>
+                </div>
+                <div class="storage-text" id="storageText">0 Mo / 500 Mo utilisés</div>
             </div>
-        </main>
+            
+            <button class="publish-btn" id="publishBtn">
+                <i class="fas fa-paper-plane"></i> Publier le média
+            </button>
+        </section>
+        
+        <section class="published-media">
+            <h2 class="section-title">
+                <i class="fas fa-history"></i> Médias publiés
+                <span id="mediaCount">(0)</span>
+            </h2>
+            <div class="media-grid" id="mediaGrid">
+                <div class="no-media" id="noMediaMessage">
+                    <i class="fas fa-box-open fa-3x" style="margin-bottom: 20px;"></i>
+                    <p>Aucun média publié pour le moment</p>
+                    <p>Commencez par publier votre premier média !</p>
+                </div>
+            </div>
+        </section>
     </div>
     
     <div class="notification" id="notification">
-        Fichier ajouté avec succès!
+        <i class="fas fa-check-circle"></i>
+        <span id="notificationText">Média publié avec succès!</span>
     </div>
 
     <script>
         // Configuration de la base de données
         const DB_NAME = 'MediaDatabase';
-        const STORE_NAME = 'media';
-        const MAX_STORAGE_MB = 500; // Limite de stockage de 500 Mo
+        const STORE_NAME = 'medias';
+        const MAX_STORAGE_MB = 500; // 500 Mo d'espace de stockage
+        
         let db;
-        
-        // Éléments DOM
-        const mediaInput = document.getElementById('mediaInput');
-        const mediaGallery = document.getElementById('mediaGallery');
-        const emptyState = document.getElementById('emptyState');
-        const dropZone = document.getElementById('dropZone');
-        const notification = document.getElementById('notification');
-        const storageText = document.getElementById('storageText');
-        const progressFill = document.getElementById('progressFill');
-        const storagePercent = document.getElementById('storagePercent');
-        const filterButtons = document.querySelectorAll('.filter-btn');
-        
+        let selectedMedia = null;
+        let currentFilter = 'all';
+
         // Initialiser la base de données
         function initDB() {
             return new Promise((resolve, reject) => {
-                const request = indexedDB.open(DB_NAME, 1);
+                const request = indexedDB.open(DB_NAME, 2);
                 
                 request.onupgradeneeded = (event) => {
                     db = event.target.result;
                     if (!db.objectStoreNames.contains(STORE_NAME)) {
-                        db.createObjectStore(STORE_NAME, { keyPath: 'id' });
+                        // Créer le store pour les médias
+                        const store = db.createObjectStore(STORE_NAME, { 
+                            keyPath: 'id',
+                            autoIncrement: true 
+                        });
+                        
+                        // Créer des index pour faciliter les recherches
+                        store.createIndex('title', 'title', { unique: false });
+                        store.createIndex('date', 'date', { unique: false });
+                        store.createIndex('type', 'type', { unique: false });
                     }
                 };
                 
@@ -1282,7 +1498,7 @@
                     db = event.target.result;
                     resolve();
                     updateStorageInfo();
-                    loadMedia();
+                    loadMedias();
                 };
                 
                 request.onerror = (event) => {
@@ -1290,175 +1506,185 @@
                 };
             });
         }
-        
+
         // Charger tous les médias
-        function loadMedia(filter = 'all') {
+        function loadMedias(filter = 'all') {
             const transaction = db.transaction([STORE_NAME], 'readonly');
             const store = transaction.objectStore(STORE_NAME);
-            const request = store.getAll();
+            let request;
+            
+            if (filter === 'all') {
+                request = store.getAll();
+            } else {
+                const index = store.index('type');
+                request = index.getAll(filter);
+            }
             
             request.onsuccess = () => {
-                const mediaItems = request.result;
-                renderGallery(mediaItems, filter);
+                const medias = request.result;
+                renderMediaGrid(medias);
                 
-                if (mediaItems.length === 0) {
-                    emptyState.style.display = 'block';
+                // Mettre à jour le compteur de médias
+                document.getElementById('mediaCount').textContent = `(${medias.length})`;
+                
+                if (medias.length === 0) {
+                    document.getElementById('noMediaMessage').style.display = 'block';
                 } else {
-                    emptyState.style.display = 'none';
+                    document.getElementById('noMediaMessage').style.display = 'none';
                 }
             };
         }
-        
-        // Afficher la galerie
-        function renderGallery(mediaItems, filter) {
-            mediaGallery.innerHTML = '';
+
+        // Afficher la grille de médias
+        function renderMediaGrid(medias) {
+            const mediaGrid = document.getElementById('mediaGrid');
+            mediaGrid.innerHTML = '';
             
-            if (mediaItems.length === 0) {
-                emptyState.style.display = 'block';
+            if (medias.length === 0) {
+                document.getElementById('noMediaMessage').style.display = 'block';
                 return;
             }
             
-            emptyState.style.display = 'none';
+            // Trier les médias par date (les plus récentes en premier)
+            medias.sort((a, b) => new Date(b.date) - new Date(a.date));
             
-            // Filtrer les éléments selon le type
-            const filteredItems = filter === 'all' 
-                ? mediaItems 
-                : mediaItems.filter(item => item.type === filter);
-            
-            if (filteredItems.length === 0) {
-                mediaGallery.innerHTML = `
-                    <div class="empty-state">
-                        <p>Aucun ${getFilterLabel(filter)} trouvé</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            // Afficher les éléments filtrés
-            filteredItems.forEach(media => {
-                const mediaCard = createMediaCard(media);
-                mediaGallery.appendChild(mediaCard);
+            medias.forEach(media => {
+                const mediaItem = createMediaItem(media);
+                mediaGrid.appendChild(mediaItem);
             });
         }
-        
-        // Créer une carte média
-        function createMediaCard(media) {
-            const card = document.createElement('div');
-            card.className = 'media-card';
-            card.dataset.id = media.id;
-            card.dataset.type = media.type;
+
+        // Créer un élément média
+        function createMediaItem(media) {
+            const mediaItem = document.createElement('div');
+            mediaItem.className = 'media-item';
+            mediaItem.dataset.id = media.id;
+            mediaItem.dataset.type = media.type;
             
-            let mediaContent = '';
-            if (media.type === 'image') {
-                mediaContent = `<img src="${media.url}" alt="${media.name}">`;
+            // Convertir les données binaires en Blob
+            const blob = new Blob([media.fileData], { type: media.mimeType });
+            const url = URL.createObjectURL(blob);
+            
+            let mediaContentHTML = '';
+            
+            if (media.type === 'photo') {
+                mediaContentHTML = `
+                    <div class="media-type-indicator">
+                        <i class="fas fa-camera"></i> Photo
+                    </div>
+                    <img src="${url}" alt="${media.title}">
+                `;
             } else if (media.type === 'video') {
-                mediaContent = `
+                mediaContentHTML = `
+                    <div class="media-type-indicator">
+                        <i class="fas fa-video"></i> Vidéo
+                    </div>
                     <video controls>
-                        <source src="${media.url}" type="${media.mimeType}">
+                        <source src="${url}" type="${media.mimeType}">
                         Votre navigateur ne supporte pas les vidéos.
                     </video>
                 `;
             } else if (media.type === 'audio') {
-                mediaContent = `
+                mediaContentHTML = `
+                    <div class="media-type-indicator">
+                        <i class="fas fa-music"></i> Audio
+                    </div>
                     <audio controls>
-                        <source src="${media.url}" type="${media.mimeType}">
+                        <source src="${url}" type="${media.mimeType}">
                         Votre navigateur ne supporte pas les audios.
                     </audio>
                 `;
             }
             
-            card.innerHTML = `
+            mediaItem.innerHTML = `
+                <div class="media-header">
+                    <div class="media-title">${media.title || 'Sans titre'}</div>
+                    <div class="media-date">Publié le: ${formatDate(media.date)}</div>
+                </div>
                 <div class="media-content">
-                    ${mediaContent}
+                    ${mediaContentHTML}
                 </div>
-                <div class="media-info">
-                    <div class="media-title">${media.name}</div>
-                    <div class="media-meta">
-                        <span>${formatFileSize(media.size)}</span>
-                        <span>${formatDate(media.date)}</span>
-                    </div>
-                </div>
-                <div class="media-controls">
-                    <button class="delete-btn" onclick="deleteMedia('${media.id}')">Supprimer</button>
+                <div class="media-footer">
+                    <div class="media-size">${formatFileSize(media.size)}</div>
+                    <button class="delete-btn" data-id="${media.id}">
+                        <i class="fas fa-trash"></i> Supprimer
+                    </button>
                 </div>
             `;
             
-            return card;
+            return mediaItem;
         }
-        
+
         // Ajouter un média
-        function addMedia(file) {
+        function addMedia(file, title, description) {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
                 
                 reader.onload = (event) => {
+                    // Déterminer le type de média
+                    let mediaType = '';
+                    if (file.type.startsWith('image/')) mediaType = 'photo';
+                    else if (file.type.startsWith('video/')) mediaType = 'video';
+                    else if (file.type.startsWith('audio/')) mediaType = 'audio';
+                    
                     const media = {
-                        id: Date.now() + '-' + Math.random().toString(36).substr(2, 9),
-                        name: file.name,
-                        type: file.type.split('/')[0],
+                        title: title,
+                        description: description,
                         mimeType: file.type,
+                        type: mediaType,
                         size: file.size,
                         date: new Date().toISOString(),
-                        file: file,
-                        url: URL.createObjectURL(file)
+                        fileData: event.target.result // Données binaires du fichier
                     };
                     
                     const transaction = db.transaction([STORE_NAME], 'readwrite');
                     const store = transaction.objectStore(STORE_NAME);
-                    store.add(media);
+                    const request = store.add(media);
                     
-                    transaction.oncomplete = () => {
+                    request.onsuccess = () => {
+                        // Ajouter l'ID généré automatiquement
+                        media.id = request.result;
                         resolve(media);
-                        showNotification('Fichier ajouté avec succès!');
+                        showNotification(`${mediaType === 'photo' ? 'Photo' : mediaType === 'video' ? 'Vidéo' : 'Audio'} publié avec succès!`);
                         updateStorageInfo();
-                        loadMedia();
+                        loadMedias(currentFilter);
                     };
                     
                     transaction.onerror = (event) => {
-                        reject('Erreur lors de l\'ajout: ' + event.target.error);
+                        reject('Erreur lors de la publication: ' + event.target.error);
                     };
                 };
                 
+                // Lire le fichier en tant qu'ArrayBuffer
                 reader.readAsArrayBuffer(file);
             });
         }
-        
+
         // Supprimer un média
-        window.deleteMedia = function(id) {
+        function deleteMedia(id) {
             const transaction = db.transaction([STORE_NAME], 'readwrite');
             const store = transaction.objectStore(STORE_NAME);
             
-            // Récupérer l'élément pour libérer l'URL
-            const getRequest = store.get(id);
+            const request = store.delete(id);
             
-            getRequest.onsuccess = () => {
-                const media = getRequest.result;
-                if (media) {
-                    URL.revokeObjectURL(media.url);
-                }
-                
-                // Supprimer de la base de données
-                store.delete(id);
-                
-                transaction.oncomplete = () => {
-                    showNotification('Fichier supprimé avec succès!');
-                    updateStorageInfo();
-                    loadMedia();
-                };
+            request.onsuccess = () => {
+                showNotification('Média supprimé avec succès!');
+                updateStorageInfo();
+                loadMedias(currentFilter);
             };
         }
-        
+
         // Mettre à jour les informations de stockage
-        async function updateStorageInfo() {
+        function updateStorageInfo() {
             const transaction = db.transaction([STORE_NAME], 'readonly');
             const store = transaction.objectStore(STORE_NAME);
             const request = store.getAll();
             
             request.onsuccess = () => {
-                const mediaItems = request.result;
+                const medias = request.result;
                 let totalSize = 0;
                 
-                mediaItems.forEach(media => {
+                medias.forEach(media => {
                     totalSize += media.size;
                 });
                 
@@ -1466,29 +1692,41 @@
                 const maxMB = MAX_STORAGE_MB;
                 const percent = Math.min(100, (totalMB / maxMB) * 100);
                 
-                storageText.textContent = `Stockage: ${totalMB} Mo / ${maxMB} Mo`;
+                document.getElementById('storageText').textContent = 
+                    `${totalMB} Mo / ${maxMB} Mo utilisés`;
+                
+                const progressFill = document.getElementById('progressFill');
                 progressFill.style.width = `${percent}%`;
-                storagePercent.textContent = `${percent.toFixed(1)}%`;
+                progressFill.textContent = `${percent.toFixed(1)}%`;
                 
                 // Changer la couleur si le stockage est presque plein
                 if (percent > 90) {
-                    progressFill.style.background = 'linear-gradient(90deg, #ff6b6b, #ff5252)';
+                    progressFill.style.background = 'linear-gradient(90deg, #e74c3c, #c0392b)';
                 } else {
-                    progressFill.style.background = 'linear-gradient(90deg, #6e8efb, #a777e3)';
+                    progressFill.style.background = 'linear-gradient(90deg, #4CAF50, #2E7D32)';
                 }
             };
         }
-        
+
         // Afficher une notification
-        function showNotification(message) {
-            notification.textContent = message;
+        function showNotification(message, isError = false) {
+            const notification = document.getElementById('notification');
+            const notificationText = document.getElementById('notificationText');
+            notificationText.textContent = message;
+            
+            if (isError) {
+                notification.className = 'notification error';
+            } else {
+                notification.className = 'notification';
+            }
+            
             notification.classList.add('show');
             
             setTimeout(() => {
                 notification.classList.remove('show');
-            }, 3000);
+            }, 4000);
         }
-        
+
         // Formater la taille du fichier
         function formatFileSize(bytes) {
             if (bytes === 0) return '0 Bytes';
@@ -1497,93 +1735,187 @@
             const i = Math.floor(Math.log(bytes) / Math.log(k));
             return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
         }
-        
+
         // Formater la date
         function formatDate(dateString) {
             const date = new Date(dateString);
             return date.toLocaleDateString('fr-FR', {
                 day: '2-digit',
                 month: '2-digit',
-                year: 'numeric'
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
             });
         }
-        
-        // Obtenir le label du filtre
-        function getFilterLabel(filter) {
-            switch (filter) {
-                case 'image': return 'photo';
-                case 'video': return 'vidéo';
-                case 'audio': return 'audio';
-                default: return 'média';
+
+        // Afficher l'aperçu du média
+        function showPreview(file) {
+            const previewContainer = document.getElementById('previewContainer');
+            const previewContent = document.getElementById('previewContent');
+            
+            previewContainer.style.display = 'block';
+            previewContent.innerHTML = '';
+            
+            if (file.type.startsWith('image/')) {
+                const imgElement = document.createElement('img');
+                imgElement.src = URL.createObjectURL(file);
+                imgElement.alt = "Aperçu de l'image";
+                previewContent.appendChild(imgElement);
+                
+                // Ajouter un indicateur de type
+                const typeIndicator = document.createElement('div');
+                typeIndicator.className = 'media-type-indicator';
+                typeIndicator.innerHTML = '<i class="fas fa-camera"></i> Photo';
+                previewContent.appendChild(typeIndicator);
+                
+            } else if (file.type.startsWith('video/')) {
+                const videoElement = document.createElement('video');
+                videoElement.controls = true;
+                videoElement.src = URL.createObjectURL(file);
+                videoElement.style.maxWidth = '100%';
+                videoElement.style.maxHeight = '400px';
+                videoElement.style.borderRadius = '10px';
+                previewContent.appendChild(videoElement);
+                
+                // Ajouter un indicateur de type
+                const typeIndicator = document.createElement('div');
+                typeIndicator.className = 'media-type-indicator';
+                typeIndicator.innerHTML = '<i class="fas fa-video"></i> Vidéo';
+                previewContent.appendChild(typeIndicator);
+                
+            } else if (file.type.startsWith('audio/')) {
+                const audioElement = document.createElement('audio');
+                audioElement.controls = true;
+                audioElement.src = URL.createObjectURL(file);
+                audioElement.style.width = '100%';
+                previewContent.appendChild(audioElement);
+                
+                // Ajouter un indicateur de type
+                const typeIndicator = document.createElement('div');
+                typeIndicator.className = 'media-type-indicator';
+                typeIndicator.innerHTML = '<i class="fas fa-music"></i> Audio';
+                previewContent.appendChild(typeIndicator);
             }
         }
-        
+
         // Initialisation de l'application
         window.addEventListener('DOMContentLoaded', async () => {
             try {
                 await initDB();
                 
                 // Événements de sélection de fichier
-                mediaInput.addEventListener('change', (e) => {
-                    for (const file of e.target.files) {
-                        addMedia(file).catch(error => {
-                            console.error('Erreur:', error);
-                            showNotification('Erreur: ' + error);
-                        });
+                document.getElementById('mediaInput').addEventListener('change', (e) => {
+                    if (e.target.files.length > 0) {
+                        selectedMedia = e.target.files[0];
+                        
+                        // Vérifier la taille du fichier
+                        if (selectedMedia.size > MAX_STORAGE_MB * 1024 * 1024) {
+                            showNotification(
+                                `Le média dépasse la taille maximale de ${MAX_STORAGE_MB} Mo!`, 
+                                true
+                            );
+                            return;
+                        }
+                        
+                        showPreview(selectedMedia);
                     }
-                    mediaInput.value = '';
                 });
                 
                 // Glisser-déposer
+                const dropZone = document.getElementById('dropZone');
+                
                 dropZone.addEventListener('dragover', (e) => {
                     e.preventDefault();
-                    dropZone.style.borderColor = '#6e8efb';
-                    dropZone.style.backgroundColor = '#f0edff';
+                    dropZone.classList.add('active');
                 });
                 
                 dropZone.addEventListener('dragleave', () => {
-                    dropZone.style.borderColor = '#a777e3';
-                    dropZone.style.backgroundColor = '#f8f6ff';
+                    dropZone.classList.remove('active');
                 });
                 
                 dropZone.addEventListener('drop', (e) => {
                     e.preventDefault();
-                    dropZone.style.borderColor = '#a777e3';
-                    dropZone.style.backgroundColor = '#f8f6ff';
+                    dropZone.classList.remove('active');
                     
-                    for (const file of e.dataTransfer.files) {
-                        if (file.type.startsWith('image/') || 
-                            file.type.startsWith('video/') || 
-                            file.type.startsWith('audio/')) {
-                            addMedia(file).catch(error => {
-                                console.error('Erreur:', error);
-                                showNotification('Erreur: ' + error);
-                            });
+                    if (e.dataTransfer.files.length > 0) {
+                        const file = e.dataTransfer.files[0];
+                        
+                        // Vérifier que c'est un média accepté
+                        if (!file.type.startsWith('image/') && 
+                            !file.type.startsWith('video/') && 
+                            !file.type.startsWith('audio/')) {
+                            showNotification('Veuillez déposer un fichier image, vidéo ou audio!', true);
+                            return;
+                        }
+                        
+                        // Vérifier la taille
+                        if (file.size > MAX_STORAGE_MB * 1024 * 1024) {
+                            showNotification(
+                                `Le média dépasse la taille maximale de ${MAX_STORAGE_MB} Mo!`, 
+                                true
+                            );
+                            return;
+                        }
+                        
+                        selectedMedia = file;
+                        showPreview(selectedMedia);
+                    }
+                });
+                
+                // Bouton de publication
+                document.getElementById('publishBtn').addEventListener('click', async () => {
+                    if (!selectedMedia) {
+                        showNotification('Veuillez sélectionner un média!', true);
+                        return;
+                    }
+                    
+                    const title = document.getElementById('mediaTitle').value.trim() || 'Mon média';
+                    const description = document.getElementById('mediaDescription').value.trim() || '';
+                    
+                    try {
+                        await addMedia(selectedMedia, title, description);
+                        
+                        // Réinitialiser le formulaire
+                        selectedMedia = null;
+                        document.getElementById('previewContainer').style.display = 'none';
+                        document.getElementById('mediaTitle').value = '';
+                        document.getElementById('mediaDescription').value = '';
+                        document.getElementById('mediaInput').value = '';
+                    } catch (error) {
+                        console.error('Erreur:', error);
+                        showNotification('Erreur: ' + error, true);
+                    }
+                });
+                
+                // Événement de suppression (délégation d'événements)
+                document.getElementById('mediaGrid').addEventListener('click', (e) => {
+                    if (e.target.closest('.delete-btn')) {
+                        const btn = e.target.closest('.delete-btn');
+                        const id = parseInt(btn.dataset.id);
+                        if (confirm('Voulez-vous vraiment supprimer ce média?')) {
+                            deleteMedia(id);
                         }
                     }
                 });
                 
-                // Filtres
-                filterButtons.forEach(button => {
-                    button.addEventListener('click', () => {
-                        filterButtons.forEach(btn => btn.classList.remove('active'));
-                        button.classList.add('active');
-                        loadMedia(button.dataset.filter);
+                // Filtres par type de média
+                document.querySelectorAll('.type-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        currentFilter = btn.dataset.type;
+                        loadMedias(currentFilter);
                     });
                 });
                 
             } catch (error) {
                 console.error('Erreur d\'initialisation:', error);
-                showNotification('Erreur: ' + error);
+                showNotification('Erreur: ' + error, true);
             }
         });
     </script>
 </body>
 </html>
-
-
-
-
 
     
 
@@ -2470,6 +2802,7 @@
 
 </body>
 </html>
+
 
 
 
