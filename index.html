@@ -886,51 +886,8 @@ organise moi cet code pour que chaque partie puisse marcher sans erreurs stpl   
     <title>Mon Site de Médias Persistants</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
-            --accent: #c0392b;
-            --bg: #fdf6f0;
-            --card: #fff;
-            --question-bg: #f0f8ff;
-            --response-bg: #f5f5f5;
-            --text-color: #333;
-            --section-bg: #fff8f8;
-            --game-bg: rgba(0, 0, 0, 0.7);
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
-            color: #fff;
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: rgba(30, 30, 50, 0.9);
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
-        }
-        
-        header {
-            text-align: center;
-            padding: 40px 20px;
-            background: rgba(20, 20, 40, 0.8);
-            border-bottom: 3px solid #ffd700;
-        }
-        
-        h1 {
-            font-size: 2.8rem;
-            margin-bottom: 15px;
-            color: #ffd700;
-            text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
-        }
+
+
         
         .subtitle {
             font-size: 1.3rem;
@@ -1001,69 +958,8 @@ organise moi cet code pour que chaque partie puisse marcher sans erreurs stpl   
             transform: translateY(-3px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
             background: linear-gradient(to right, #45a049, #1B5E20);
-        }
-        
-        .file-label i {
-            margin-right: 10px;
-            font-size: 1.3rem;
-        }
-        
-        .file-info {
-            margin: 20px 0;
-            font-size: 1rem;
-            color: #aaa;
-        }
-        
-        .media-details {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 25px;
-            margin-top: 25px;
-        }
-        
-        .form-group {
-            margin-bottom: 25px;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 12px;
-            font-weight: 600;
-            font-size: 1.2rem;
-            color: #ffd700;
-        }
-        
-        .form-input, textarea {
-            width: 100%;
-            padding: 15px;
-            border-radius: 10px;
-            border: none;
-            font-size: 1.1rem;
-            background: rgba(0, 0, 0, 0.4);
-            color: white;
-            border: 2px solid #4CAF50;
-        }
-        
-        textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-        
-        .publish-btn {
-            width: 100%;
-            padding: 18px;
-            font-size: 1.3rem;
-            background: linear-gradient(to right, #2196F3, #0D47A1);
-            margin-top: 15px;
-            border: none;
-            border-radius: 10px;
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-        
-        .publish-btn:hover {
+    
+
             transform: translateY(-3px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
             background: linear-gradient(to right, #1E88E5, #0D47A1);
@@ -1105,15 +1001,7 @@ organise moi cet code pour que chaque partie puisse marcher sans erreurs stpl   
             max-width: 400px;
         }
         
-        .media-type-indicator {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 5px 10px;
-            border-radius: 15px;
-            font-size: 0.9rem;
-            z-index: 10;
+        
         }
         
         .storage-info {
@@ -1176,46 +1064,7 @@ organise moi cet code pour que chaque partie puisse marcher sans erreurs stpl   
             justify-content: center;
             gap: 15px;
         }
-        
-        .media-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 30px;
-            margin-top: 20px;
-        }
-        
-        .media-item {
-            background: rgba(30, 30, 50, 0.9);
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-            transition: all 0.4s ease;
-            border: 2px solid transparent;
-            position: relative;
-        }
-        
-        .media-item:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
-            border-color: #ffd700;
-        }
-        
-        .media-header {
-            padding: 20px;
-            background: rgba(40, 40, 60, 0.9);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .media-title {
-            font-weight: 700;
-            font-size: 1.4rem;
-            margin-bottom: 8px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            color: #ffd700;
-        }
-        
+
         .media-date {
             color: #aaa;
             font-size: 0.95rem;
@@ -3844,3 +3693,4 @@ organise moi cet code pour que chaque partie puisse marcher sans erreurs stpl   
 
 </body>
 </html>
+
