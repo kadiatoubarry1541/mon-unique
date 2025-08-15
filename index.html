@@ -1,109 +1,1394 @@
+organise moi cet code pour que chaque partie puisse marcher sans erreurs stpl                   <!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>A TOI MON UNIQUE</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --accent: #c0392b;
+            --bg: #fdf6f0;
+            --card: #fff;
+            --question-bg: #f0f8ff;
+            --response-bg: #f5f5f5;
+            --text-color: #333;
+            --section-bg: #fff8f8;
+            --game-bg: rgba(0, 0, 0, 0.7);
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg);
+            color: var(--text-color);
+            margin: 0;
+            line-height: 1.6;
+        }
+        
+        .wrap {
+            max-width: 1100px;
+            margin: 24px auto;
+            padding: 18px;
+        }
+        
+        h1, h2 {
+            text-align: center;
+            color: var(--accent);
+            margin: .4em 0;
+        }
+        
+        .quote {
+            font-style: italic;
+            background: #fff;
+            padding: 12px;
+            border-left: 4px solid var(--accent);
+            border-radius: 6px;
+            margin-bottom: 18px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .section {
+            background: var(--card);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .section-avant { background-color: var(--section-bg); }
+        .section-avec { background-color: #f0fff0; }
+        .section-apres { background-color: #f5f0ff; }
+        
+        .controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 12px;
+        }
+        
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            display: block;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+        }
+        
+        video, audio {
+            width: 100%;
+            border-radius: 8px;
+            background: #000;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+        }
+        
+        .caption {
+            font-size: .95rem;
+            padding-top: 6px;
+            text-align: center;
+            color: #555;
+            font-weight: bold;
+        }
+        
+        .final {
+            text-align: center;
+            margin-top: 20px;
+            font-weight: 600;
+            padding: 20px;
+            background: var(--card);
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .btn {
+            background: var(--accent);
+            color: #fff;
+            padding: 12px 18px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            resize: vertical;
+            font-size: 1rem;
+            background: var(--question-bg);
+            color: var(--text-color);
+        }
+        
+        textarea:focus {
+            outline: 2px solid var(--accent);
+            border-color: transparent;
+        }
+        
+        .responses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .response-item {
+            background: var(--response-bg);
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 8px;
+            position: relative;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .response-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+            color: #666;
+        }
+        
+        .response-text {
+            white-space: pre-wrap;
+            margin-bottom: 10px;
+            line-height: 1.5;
+            font-size: 1.1rem;
+            color: #222;
+        }
+        
+        .response-media {
+            margin-top: 15px;
+        }
+        
+        .delete-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: transparent;
+            border: none;
+            color: #c0392b;
+            cursor: pointer;
+            font-size: 18px;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        .delete-btn:hover {
+            background: rgba(192, 57, 43, 0.1);
+        }
+        
+        .no-responses {
+            text-align: center;
+            padding: 30px;
+            font-style: italic;
+            color: #777;
+            background: var(--response-bg);
+            border-radius: 8px;
+        }
+        
+        .response-actions {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        
+        .file-input-wrapper {
+            position: relative;
+            margin: 15px 0;
+        }
+        
+        .file-input-wrapper input[type="file"] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+        
+        .file-input-label {
+            display: block;
+            background: #e0e0e0;
+            padding: 12px 15px;
+            border-radius: 6px;
+            text-align: center;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+        
+        .file-input-label:hover {
+            background: #d0d0d0;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            font-size: 1.1rem;
+            color: #444;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            font-size: 1rem;
+            background: #fff;
+        }
+        
+        .confirmation-message {
+            text-align: center;
+            padding: 12px;
+            background: #4CAF50;
+            color: white;
+            border-radius: 6px;
+            margin-top: 15px;
+            display: none;
+            font-weight: bold;
+        }
+        
+        .game-section {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            margin-top: 40px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+        }
+        
+        .game-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+            background: var(--game-bg);
+            border-radius: 20px;
+        }
+        
+        .game-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #ffd700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+        
+        .game-description {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            color: #e0e0e0;
+        }
+        
+        .game-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+        
+        .game-panel {
+            background: rgba(30, 30, 50, 0.8);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .account-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 20px 0;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+        
+        .ablay .account-value { color: #4CAF50; }
+        .koolo .account-value { color: #2196F3; }
+        .depot .account-value { color: #FF9800; }
+        
+        .game-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .game-btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn-primary { background: linear-gradient(to right, #4CAF50, #2E7D32); color: white; }
+        .btn-secondary { background: linear-gradient(to right, #2196F3, #0D47A1); color: white; }
+        
+        .game-btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .game-btn:active:not(:disabled) { transform: translateY(1px); }
+        
+        .game-log {
+            margin-top: 30px;
+            background: rgba(20, 20, 40, 0.8);
+            border-radius: 15px;
+            padding: 25px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .log-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #ffd700;
+        }
+        
+        .log-entry {
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .log-entry.ablay { border-left: 4px solid #4CAF50; }
+        .log-entry.koolo { border-left: 4px solid #2196F3; }
+        
+        .navigation {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .nav-btn {
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+        
+        /* Styles spécifiques au jeu */
+        .accounts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .account {
+            background: rgba(30, 30, 50, 0.8);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border: 2px solid transparent;
+        }
+        
+        .account.active {
+            border-color: #ffd700;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 215, 0, 0.3);
+        }
+        
+        .account-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .game-panel {
+            background: rgba(20, 20, 40, 0.8);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+        
+        .panel-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .panel-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #ffd700;
+        }
+        
+        .panel-content {
+            margin-top: 20px;
+        }
+        
+        .game-panel textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            color: white;
+            font-size: 1.1rem;
+            resize: vertical;
+            margin-bottom: 15px;
+        }
+        
+        .game-panel textarea:focus {
+            outline: 2px solid #ffd700;
+        }
+        
+        .game-panel .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+        
+        .btn-tertiary { background: linear-gradient(to right, #9C27B0, #6A1B9A); color: white; }
+        .btn-warning { background: linear-gradient(to right, #FF9800, #EF6C00); color: white; }
+        
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        
+        .transaction-log {
+            background: rgba(20, 20, 40, 0.8);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            max-height: 300px;
+            overflow-y: auto;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+        
+        .log-entry {
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .log-entry.guest { border-left: 4px solid #9C27B0; }
+        .log-entry.system { border-left: 4px solid #ffd700; }
+        
+        .log-icon { font-size: 1.5rem; }
+        .log-content { flex: 1; }
+        .log-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+        
+        .guest-section {
+            background: rgba(20, 20, 40, 0.8);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            margin-bottom: 20px;
+        }
+        
+        .guest-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            color: #9C27B0;
+        }
+        
+        .guest-input {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .guest-input input {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            color: white;
+            font-size: 1.1rem;
+        }
+        
+        .guests-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .guest-card {
+            background: rgba(50, 30, 60, 0.8);
+            border-radius: 10px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .guest-name { font-weight: 600; }
+        .guest-amount { margin-left: auto; font-weight: 700; color: #9C27B0; }
+        
+        .transfer-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+        }
+        
+        .money-transfer {
+            background: rgba(30, 30, 50, 0.95);
+            padding: 50px;
+            border-radius: 20px;
+            text-align: center;
+            border: 3px solid #ffd700;
+            box-shadow: 0 0 50px rgba(255, 215, 0, 0.5);
+        }
+        
+        .money-icon {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            color: #ffd700;
+        }
+        
+        .transfer-text {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: white;
+        }
+        
+        .transfer-amount {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: #4CAF50;
+            text-shadow: 0 0 20px rgba(76, 175, 80, 0.7);
+        }
+        
+        .negative {
+            color: #F44336;
+            text-shadow: 0 0 20px rgba(244, 67, 54, 0.7);
+        }
+        
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 10px;
+            padding: 15px 25px;
+            margin-top: 30px;
+            font-size: 1.1rem;
+        }
+        
+        .turn-indicator {
+            background: #ffd700;
+            color: #000;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 700;
+        }
+        
+        .question-status {
+            text-align: center;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+        
+        .question-asked {
+            background-color: #4CAF50;
+            color: white;
+        }
+        
+        .question-answered {
+            background-color: #2196F3;
+            color: white;
+        }
+        
+        /* Media queries pour la responsivité */
+        @media (max-width: 768px) {
+            .wrap {
+                padding: 10px;
+            }
+            
+            .response-actions {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .media-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .game-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .accounts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .section {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            .navigation {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h2>A TOI MON HOMME</h2>
+    <p class="quote">MON COEUR EST REMPLI PAR TON AMOUR. <br>
+    TES PRINCIPES SONT MES LIMITES ET TES DESIRS SONT MA DIRECTION.</p>
+        
+        <h1>MON AMOUR = PAIX ! CAR C'EST LA BASE DE MES PRINCIPES</h1>
+        <p class="quote">"Et parmi Ses signes, Il a créé pour vous, de vous-mêmes, des épouses pour que vous viviez en tranquillité avec elles et Il a mis entre vous de l’amour et de la bonté." (Coran, 30:21)</p>
+        
+        <div class="navigation">
+            <button class="nav-btn" onclick="scrollToSection('sec-avant')">Ma vie avant toi</button>
+            <button class="nav-btn" onclick="scrollToSection('sec-avec')">Ma vie avec toi</button>
+            <button class="nav-btn" onclick="scrollToSection('sec-apres')">Ma vie à partir d'aujourd'hui</button>
+            <button class="nav-btn" onclick="scrollToSection('game-section')">Jouer au jeu</button>
+        </div>
+
+        <!-- SECTION AVANT -->
+        <div class="section section-avant" id="sec-avant">
+            <h2>Ma vie avant toi</h2>
+            <p>
+                Je suis toujours restée seule et j’ai travaillé dur  
+                espérant te rencontrer, l’homme de ma vie, et je voulais vraiment qu’il soit satisfait de moi.<br>
+                Malgré que je ne t'avais pas encore trouvé, je me disais toujours que tu existes et j'étais heureuse.<br>
+                Juste du fait que je t'attendais et que je me préparais,<br>
+                je prenais tout mon temps sur les études et maintenant que je t'ai trouvé,<br>
+                tu veux me retirer toute la paix que j'avais.<br>
+                Avant mon cœur souffrait de ton absence.<br>
+                Veux-tu encore que mon cœur souffre de ta présence ?
+            </p>
+            <div class="media-grid" id="grid-avant">
+                <!-- Photos (5) -->
+                <div class="media-container"><img src="avant/IMG_20220529_025543_342~2.jpg" alt="Avant 1"></div>
+                <div class="media-container"><img src="avant/20240120-100200.jpg" alt="Avant 2"></div>
+                <div class="media-container"><img src="avant/20240716_175927.jpg" alt="Avant 3"></div>
+                <div class="media-container"><img src="avant/Screenshot_20250414_143341_Video Player.jpg" alt="Avant 4"></div>
+                <div class="media-container"><img src="avant/IMG_20180101_015437~2.jpg" alt="Avant 5"></div>
+
+                <!-- Videos (1) -->
+                <div class="media-container"><video controls preload="metadata"><source src="avant/VID20240205033234.mp4" type="video/mp4">Votre navigateur ne supporte pas la vidéo.</video></div>
+
+                <!-- Audio (1) -->
+                <div class="media-container" style="grid-column:1/-1">
+                    <div class="caption">Écoute : je suis vraiment désolée, je ne savais pas que ça comptait pour toi</div>
+                    <audio controls preload="metadata"><source src="avant/Voix 002.m4a" type="audio/mpeg">Votre navigateur ne supporte pas l'audio.</audio>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION AVEC -->
+        <div class="section section-avec" id="sec-avec">
+            <h2>Ma vie avec toi</h2>
+            <p>
+                J'étais tellement heureuse et si cela avait duré, ça m'aurait vraiment étonnée car j'étais<br>
+                traitée comme une reine.<br>
+                Pourtant, j'ai toujours appris que la femme doit être forte car vous les hommes, vous ne savez pas Bien-Aimé.
+            </p>
+            <div class="media-grid" id="grid-avec">
+                <div class="media-container"><img src="avec/IMG-20250424-WA0006.jpg" alt="Avec 1"></div>
+                <div class="media-container"><img src="avec/photo_avant1.jpg" alt="Avec 2"></div>
+                <div class="media-container"><img src="avec/Screenshot_20241015_193039_Video Player.jpg" alt="Avec 3"></div>
+                <div class="media-container"><img src="avec/IMG_20180106_032624~2.jpg" alt="Avec 4"></div>
+                <div class="media-container"><img src="avec/IMG-20250615-WA0017.jpg" alt="Avec 5"></div>
+                <div class="media-container"><video controls preload="metadata"><source src="avec/VID-20250523-WA0060.mp4" type="video/mp4">Votre navigateur ne supporte pas la vidéo.</video></div>
+                <div class="media-container"><video controls preload="metadata"><source src="avec/Kb.mp4" type="video/mp4">Votre navigateur ne supporte pas la vidéo.</video></div>
+                <div class="media-container" style="grid-column:1/-1">
+                    <div class="caption">Écoute : Notre bien ce vocal car je ne veux pas revenir pour répéter cela</div>
+                    <audio controls preload="metadata"><source src="avec/Mon bb.m4a" type="audio/mpeg">Votre navigateur ne supporte pas l'audio.</audio>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION APRES -->
+        <div class="section section-apres" id="sec-apres">
+            <h2>Ma vie à partir d’aujourd’hui</h2>
+            <p>Je décide de rester derrière toi,<br>
+                donc je ne veux plus me plaindre.<br>
+                Je veux continuer mon chemin comme s'il n'y avait rien,<br>
+                car tu veux me rendre folle.
+            </p>
+            <div class="media-grid" id="grid-apres">
+                <div class="media-container"><img src="apres/Screenshot_20250125_125401_Gallery.jpg" alt="Après 1"></div>
+                <div class="media-container"><img src="apres/20240506_131926.jpg" alt="Après 2"></div>
+                <div class="media-container"><img src="apres/20230507_151958-1.jpg" alt="Après 3"></div>
+                <div class="media-container"><img src="apres/20230507_130427.jpg" alt="Après 4"></div>
+                <div class="media-container"><img src="apres/20230514_181118.jpg" alt="Après 5"></div>
+                <div class="media-container"><video controls preload="metadata"><source src="Video_20250809_113747.mp4" type="video/mp4">Votre navigateur ne supporte pas la vidéo.</video></div>
+                <div class="media-container"><video controls preload="metadata"><source src="Video_20250523_112832.mp4" type="video/mp4">Votre navigateur ne supporte pas la vidéo.</video></div>
+                <div class="media-container" style="grid-column:1/-1">
+                    <audio controls preload="metadata"><source src="apres/11.m4a" type="audio/mpeg">Votre navigateur ne supporte pas l'audio.</audio>
+                </div>
+            </div>
+        </div>
+
+        <!-- Message final -->
+        <div class="final">
+            <p>Je t’aime de tout mon cœur, et je prie Allah pour qu’Il te protège et te guide toujours. Profite de cette surprise, mon amour !<br>
+                • 🌟 Un amour sincère et respectueux<br>
+                • 🤲 Des prières constantes pour toi<br>
+                • 🫶 Une présence stable et douce, comme l’Islam le recommande<br>
+                • 📖 Une volonté de bâtir un avenir ensemble, selon les règles d'Allah<br>
+                • 🎁 Et des surprises... comme celle-ci 💖<br><br>
+                TAPE CE BOUTON EN BAS POUR VOIR UN MESSAGE TRÈS IMPORTANT
+            </p>
+            <button class="btn" onclick="document.getElementById('loveMessage').style.display='block'">💖TAPE ICI💖</button>
+            <p id="loveMessage" style="display:none;margin-top:20px;font-weight:700;white-space: pre-line;padding:20px;background:#fff8f8;border-radius:8px;">
+                Tu es ma lumière, et je suis tellement heureuse de construire notre vie ensemble, insha’Allah.
+                <br><br>
+                J’ai appris avec la famille et la religion que la femme = soumission donc je ne cherche pas à avoir la force sur toi
+                mais juste une lumière.
+                Si tu agis maintenant, c’est la seule chose que tu ne regretteras jamais, sinon si tu as peur tu vas le regretter toute ta vie car tu n’auras jamais quelqu’un qui t’aime comme moi.
+                Car moi j’ai vraiment perdu la tête et je t’ai donné tout mon cœur car j’ai passé toute ma vie à attendre. 1 SEUL ET DIEU EST MON TÉMOIN.
+                <br><br>
+                Comment est-ce que je peux te demander plus de 7 fois de me laisser mais tu n’y arrives pas ?
+                Je me demande si tout ça c’est l’amour seulement, même moi je ne veux plus te fatiguer en t’invitant à te présenter.
+                Si tu dors tu ne me trouveras pas ici car maman va faire un choix pour moi, et je serai loin de toi mais si c’est ça ton désir,
+                je reste soumise nani mon grand.
+                <br><br>
+                J’ai toujours été d’accord avec ma mère, c’est seulement à cause de toi que je me dispute avec elle, et je ne peux pas supporter longtemps.
+                <br>
+                Je m’excuse pour mes erreurs, vraiment tout, et je n’ai plus de mot pour toi !
+                <br>
+                JE T’AIME ET JE VEUX TON CŒUR OU RIEN.
+                <br>
+                J’ai la foi en DIEU, si tu me refuses y’a aucun mal, je tourne mon cœur vers DIEU car je passe tout mon temps avec lui.
+                <br><br>
+                Lorsque tu n’étais que l’espoir dans mon cœur,
+                <br>
+                Je ne veux plus te parler car tu es ma bouche;
+            </p>
+        </div>
+
+        <!-- Section réponse améliorée -->
+        <div class="section">
+            <h2>Réponds-moi ❤️</h2>
+            <p>Tu peux m’écrire un petit message ou m’envoyer une photo, une vidéo ou un audio directement ici mais de petite taille :</p>
+
+
+
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notre Site Mon Ablaye</title>
+    <title>Mon Site de Médias Persistants</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <body>
-        <style>
-
-        /* Rendre la grille de médias verticale */
-.media-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-/* Rendre le sélecteur de type vertical */
-.type-selector {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-}
-
-/* Ajuster les éléments de média pour un affichage vertical */
-.media-item {
-    width: 100%;
-    max-width: 600px; /* Limite la largeur pour une meilleure lisibilité */
-    margin: 0 auto;
-}
-
-/* S'assurer que la section de détails des médias est verticale */
-.media-details {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-/* Ajuster le conteneur de progression pour un affichage clair */
-.progress-container {
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
-}
-Pour le deuxième fichier HTML (Jeu de partage)
-Ajoute ou remplace ces styles dans la section <style> pour rendre l'affichage vertical :
-css/* Rendre le conteneur de comptes vertical */
-.accounts-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-/* Rendre le conteneur de jeu vertical */
-.game-container {
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
-}
-
-/* Ajuster les actions pour un affichage vertical */
-.actions {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-/* Rendre la liste des invités verticale */
-.guests-container {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-/* Ajuster les cartes d'invités pour un affichage vertical */
-.guest-card {
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-/* S'assurer que le journal des transactions reste lisible */
-.transaction-log {
-    max-height: none; /* Supprime la limite de hauteur pour un défilement naturel */
-    overflow-y: visible;
-}
-
-/* Ajuster la barre de statut pour un affichage vertical sur petits écrans */
-.status-bar {
-    flex-direction: column;
-    gap: 10px;
-    align-items: flex-start;
-}
-
-/* Media query pour petits écrans (déjà présent, mais renforcé pour la cohérence) */
-@media (max-width: 900px) {
-    .game-container, .accounts-container, .actions, .guests-container {
-        flex-direction: column;
-    }
-}
-     <div class="container">
+    <style>
+        :root {
+            --accent: #c0392b;
+            --bg: #fdf6f0;
+            --card: #fff;
+            --question-bg: #f0f8ff;
+            --response-bg: #f5f5f5;
+            --text-color: #333;
+            --section-bg: #fff8f8;
+            --game-bg: rgba(0, 0, 0, 0.7);
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(30, 30, 50, 0.9);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+        }
+        
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(20, 20, 40, 0.8);
+            border-bottom: 3px solid #ffd700;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            color: #ffd700;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            color: #e0e0e0;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .upload-section {
+            padding: 40px;
+            background: rgba(25, 25, 45, 0.8);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .upload-box {
+            border: 3px dashed #ffd700;
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.3);
+            transition: all 0.3s;
+            margin-bottom: 25px;
+        }
+        
+        .upload-box:hover {
+            background: rgba(0, 0, 0, 0.5);
+            border-color: #4CAF50;
+        }
+        
+        .upload-box i {
+            font-size: 4.5rem;
+            color: #ffd700;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+        
+        .upload-box h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+        
+        .upload-box p {
+            color: #bbb;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+        
+        .file-input {
+            display: none;
+        }
+        
+        .file-label {
+            display: inline-block;
+            background: linear-gradient(to right, #4CAF50, #2E7D32);
+            color: white;
+            padding: 15px 35px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .file-label:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            background: linear-gradient(to right, #45a049, #1B5E20);
+        }
+        
+        .file-label i {
+            margin-right: 10px;
+            font-size: 1.3rem;
+        }
+        
+        .file-info {
+            margin: 20px 0;
+            font-size: 1rem;
+            color: #aaa;
+        }
+        
+        .media-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-top: 25px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 12px;
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: #ffd700;
+        }
+        
+        .form-input, textarea {
+            width: 100%;
+            padding: 15px;
+            border-radius: 10px;
+            border: none;
+            font-size: 1.1rem;
+            background: rgba(0, 0, 0, 0.4);
+            color: white;
+            border: 2px solid #4CAF50;
+        }
+        
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .publish-btn {
+            width: 100%;
+            padding: 18px;
+            font-size: 1.3rem;
+            background: linear-gradient(to right, #2196F3, #0D47A1);
+            margin-top: 15px;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .publish-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            background: linear-gradient(to right, #1E88E5, #0D47A1);
+        }
+        
+        .preview-container {
+            margin: 30px 0;
+            display: none;
+        }
+        
+        .preview-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+            color: #ffd700;
+            text-align: center;
+        }
+        
+        .preview-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+        }
+        
+        .preview-content video, .preview-content img {
+            max-width: 100%;
+            max-height: 400px;
+            border-radius: 10px;
+            background: #000;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        .preview-content audio {
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        .media-type-indicator {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            z-index: 10;
+        }
+        
+        .storage-info {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            text-align: center;
+        }
+        
+        .storage-header {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: #ffd700;
+        }
+        
+        .progress-container {
+            width: 100%;
+            height: 25px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 15px 0;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #2E7D32);
+            border-radius: 15px;
+            width: 0%;
+            transition: width 1s ease;
+            box-shadow: 0 0 20px rgba(76, 175, 80, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 15px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+        }
+        
+        .storage-text {
+            font-size: 1.1rem;
+            color: #bbb;
+        }
+        
+        .published-media {
+            padding: 40px;
+            background: rgba(20, 20, 40, 0.7);
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: #ffd700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .media-item {
+            background: rgba(30, 30, 50, 0.9);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            transition: all 0.4s ease;
+            border: 2px solid transparent;
+            position: relative;
+        }
+        
+        .media-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+            border-color: #ffd700;
+        }
+        
+        .media-header {
+            padding: 20px;
+            background: rgba(40, 40, 60, 0.9);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .media-title {
+            font-weight: 700;
+            font-size: 1.4rem;
+            margin-bottom: 8px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: #ffd700;
+        }
+        
+        .media-date {
+            color: #aaa;
+            font-size: 0.95rem;
+        }
+        
+        .media-content {
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 250px;
+            background: rgba(0, 0, 0, 0.4);
+            position: relative;
+        }
+        
+        .media-content video, .media-content img {
+            width: 100%;
+            max-height: 250px;
+            border-radius: 10px;
+            background: #000;
+            object-fit: contain;
+        }
+        
+        .media-content audio {
+            width: 100%;
+            max-width: 300px;
+        }
+        
+        .media-footer {
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(40, 40, 60, 0.9);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .media-size {
+            color: #aaa;
+            font-weight: 500;
+        }
+        
+        .delete-btn {
+            background: linear-gradient(to right, #e74c3c, #c0392b);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .delete-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+        }
+        
+        .no-media {
+            text-align: center;
+            padding: 60px;
+            color: #777;
+            font-style: italic;
+            font-size: 1.2rem;
+            grid-column: 1 / -1;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: linear-gradient(to right, #4CAF50, #2E7D32);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            transform: translateX(120%);
+            transition: transform 0.5s ease;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.1rem;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification.error {
+            background: linear-gradient(to right, #e74c3c, #c0392b);
+        }
+        
+        .type-selector {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .type-btn {
+            padding: 10px 20px;
+            border-radius: 50px;
+            background: rgba(0, 0, 0, 0.3);
+            color: #bbb;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+            font-weight: 600;
+        }
+        
+        .type-btn.active {
+            background: linear-gradient(to right, #2196F3, #0D47A1);
+            color: white;
+            border-color: #ffd700;
+        }
+        
+        .type-btn i {
+            margin-right: 8px;
+        }
+        
+        @media (max-width: 992px) {
+            .media-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+            
+            .media-details {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .upload-box {
+                padding: 30px 20px;
+            }
+            
+            .container {
+                margin: 10px;
+            }
+            
+            header {
+                padding: 30px 15px;
+            }
+            
+            .upload-section, .published-media {
+                padding: 30px 20px;
+            }
+            
+            .type-selector {
+                flex-wrap: wrap;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .media-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
         <header>
-            <h1><i class="fas fa-images"></i> Nos images</h1>
-            <p class="subtitle">Publie et consulte nos photos, vidéos et audios à tout moment </p>
+            <h1><i class="fas fa-images"></i> Mon Site de Médias</h1>
+            <p class="subtitle">Publiez et consultez vos photos, vidéos et audios à tout moment - Stockage persistant garanti</p>
         </header>
         
         <section class="upload-section">
@@ -124,8 +1409,8 @@ css/* Rendre le conteneur de comptes vertical */
             
             <div class="upload-box" id="dropZone">
                 <i class="fas fa-cloud-upload-alt"></i>
-                <h3>Déposons nos médias ici</h3>
-                <p>Nos photos, vidéos et audios resteront disponibles ici !</p>
+                <h3>Déposez vos médias ici</h3>
+                <p>Vos photos, vidéos et audios resteront disponibles même après 10 jours!</p>
                 <label for="mediaInput" class="file-label">
                     <i class="fas fa-folder-open"></i> Sélectionner un média
                 </label>
@@ -641,6 +1926,22 @@ css/* Rendre le conteneur de comptes vertical */
 </body>
 </html>
 
+    
+
+      
+        
+        <!-- Section du jeu -->
+    <h1> L'HOMME DE MA VIE VIENS,AMUSONS_NOUS UN PEU </h1
+     <p>Les condictions du jeu  et si tu veux ajouté plus fais moi signe</p>
+    
+      <p>1 les questions  sont vice versa donc tu dois savoir répondre mais  tu dois aussi te trouver  5 questions à mes posé. <br>
+        2 on ne se fâche  pas,on échange  nos idées  donc zéro dispute  et chacun  dois se sentir  à l'aise et surtout libre.</p>
+        <div class="game-section" id="game-section">
+            <div class="game-container">
+                <h2 class="game-title">Jeu de Partage</h2>
+                <p class="game-description">
+                    Ablay, Koolo et Invités - Partagez le dépôt de 50 000 selon vos performances
+                </p>
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -649,82 +1950,433 @@ css/* Rendre le conteneur de comptes vertical */
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jeu de Partage - Ablay, Koolo et Invités</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<style>
-                
-/* Rendre le conteneur de comptes vertical */
-.accounts-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-/* Rendre le conteneur de jeu vertical */
-.game-container {
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
-}
-
-/* Ajuster les actions pour un affichage vertical */
-.actions {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-/* Rendre la liste des invités verticale */
-.guests-container {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-/* Ajuster les cartes d'invités pour un affichage vertical */
-.guest-card {
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-/* S'assurer que le journal des transactions reste lisible */
-.transaction-log {
-    max-height: none; /* Supprime la limite de hauteur pour un défilement naturel */
-    overflow-y: visible;
-}
-
-/* Ajuster la barre de statut pour un affichage vertical sur petits écrans */
-.status-bar {
-    flex-direction: column;
-    gap: 10px;
-    align-items: flex-start;
-}
-
-/* Media query pour petits écrans (déjà présent, mais renforcé pour la cohérence) */
-@media (max-width: 900px) {
-    .game-container, .accounts-container, .actions, .guests-container {
-        flex-direction: column;
-    }
-}
-                </style>
-
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            color: #ffd700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            color: #e0e0e0;
+        }
+        
+        .accounts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .account {
+            background: rgba(30, 30, 50, 0.8);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border: 2px solid transparent;
+        }
+        
+        .account.active {
+            border-color: #ffd700;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 215, 0, 0.3);
+        }
+        
+        .account-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .account-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 20px 0;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+        
+        .account.ablay .account-value { color: #4CAF50; }
+        .account.koolo .account-value { color: #2196F3; }
+        .account.depot .account-value { color: #FF9800; }
+        .account.guest .account-value { color: #9C27B0; }
+        
+        .game-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .game-panel {
+            background: rgba(20, 20, 40, 0.8);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+        
+        .panel-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .panel-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .ablay-panel .panel-title { color: #4CAF50; }
+        .koolo-panel .panel-title { color: #2196F3; }
+        
+        .panel-content {
+            margin-top: 20px;
+        }
+        
+        textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            color: white;
+            font-size: 1.1rem;
+            resize: vertical;
+            margin-bottom: 15px;
+        }
+        
+        textarea:focus {
+            outline: 2px solid #ffd700;
+        }
+        
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+        
+        .btn-primary { background: linear-gradient(to right, #4CAF50, #2E7D32); color: white; }
+        .btn-secondary { background: linear-gradient(to right, #2196F3, #0D47A1); color: white; }
+        .btn-tertiary { background: linear-gradient(to right, #9C27B0, #6A1B9A); color: white; }
+        .btn-warning { background: linear-gradient(to right, #FF9800, #EF6C00); color: white; }
+        
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        
+        .btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn:active:not(:disabled) { transform: translateY(1px); }
+        
+        .btn-mode {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-mode.active {
+            background: linear-gradient(to right, #ffd700, #ff9800);
+            color: black;
+            font-weight: bold;
+        }
+        
+        .actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .transaction-log {
+            background: rgba(20, 20, 40, 0.8);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            max-height: 300px;
+            overflow-y: auto;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+        
+        .log-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #ffd700;
+        }
+        
+        .log-entry {
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .log-entry.ablay { border-left: 4px solid #4CAF50; }
+        .log-entry.koolo { border-left: 4px solid #2196F3; }
+        .log-entry.guest { border-left: 4px solid #9C27B0; }
+        .log-entry.system { border-left: 4px solid #ffd700; }
+        
+        .log-icon { font-size: 1.5rem; }
+        .log-content { flex: 1; }
+        .log-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+        
+        .guest-section {
+            background: rgba(20, 20, 40, 0.8);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            margin-bottom: 20px;
+        }
+        
+        .guest-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            color: #9C27B0;
+        }
+        
+        .guest-input {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .guest-input input {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            color: white;
+            font-size: 1.1rem;
+        }
+        
+        .guests-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .guest-card {
+            background: rgba(50, 30, 60, 0.8);
+            border-radius: 10px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .guest-name { font-weight: 600; }
+        .guest-amount { margin-left: auto; font-weight: 700; color: #9C27B0; }
+        
+        .transfer-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .money-transfer {
+            background: rgba(30, 30, 50, 0.95);
+            padding: 50px;
+            border-radius: 20px;
+            text-align: center;
+            border: 3px solid #ffd700;
+            box-shadow: 0 0 50px rgba(255, 215, 0, 0.5);
+        }
+        
+        .money-icon {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            color: #ffd700;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .transfer-text {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: white;
+        }
+        
+        .transfer-amount {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: #4CAF50;
+            text-shadow: 0 0 20px rgba(76, 175, 80, 0.7);
+        }
+        
+        .negative {
+            color: #F44336;
+            text-shadow: 0 0 20px rgba(244, 67, 54, 0.7);
+        }
+        
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 10px;
+            padding: 15px 25px;
+            margin-top: 30px;
+            font-size: 1.1rem;
+        }
+        
+        .turn-indicator {
+            background: #ffd700;
+            color: #000;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 700;
+            animation: pulse 2s infinite;
+        }
+        
+        .media-player {
+            width: 100%;
+            margin-top: 15px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .recording-indicator {
+            display: none;
+            color: #ff0000;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        
+        .recording-indicator .dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background-color: #ff0000;
+            border-radius: 50%;
+            margin-right: 5px;
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+        
+        .mode-section {
+            display: none;
+        }
+        
+        .mode-section.active {
+            display: block;
+        }
+        
+        @media (max-width: 900px) {
+            .game-container { grid-template-columns: 1fr; }
+            .accounts-container { grid-template-columns: 1fr; }
+            .actions { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
     <div class="container">
         <header>
             <h1><i class="fas fa-coins"></i> Jeu de Partage</h1>
             <p class="subtitle">Ablay, Koolo et Invités - Partagez le dépôt de 50 000 selon vos performances</p>
         </header>
-                 
-        <!-- Section du jeu -->
-    <h1> L'HOMME DE MA VIE VIENS,AMUSONS_NOUS UN PEU </h1
-     condictions du jeu  et si tu veux ajouté plus fais moi signe 
-      1 les questions  sont vice versa donc tu dois savoir répondre mais  tu dois aussi te trouver  5 questions à mes posé.
-        2 on ne se fâche  pas,on échange  nos idées  donc zéro dispute  et chacun  dois se sentir  à laise et surtout libre.
-         class="game-section" id="game-section">
-            <div class="game-container">
-                <h2 class="game-title">Jeu de Partage</h2>
-                <p class="game-description">
-                    Ablay, Koolo et Invités - Partagez le dépôt de 50 000 selon vos performances
-                </p>
-
+        
         <div class="accounts-container">
             <div class="account ablay" id="ablay-account">
                 <div class="account-title">
@@ -2188,11 +3840,7 @@ css/* Rendre le conteneur de comptes vertical */
             initGame();
         });
     </script>
+   
 
 </body>
 </html>
-
-
-
-
-
