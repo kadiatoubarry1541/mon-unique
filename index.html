@@ -1930,6 +1930,19 @@
     <title>Jeu de Partage - Ablay, Koolo et Invités</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
+      /* AJOUT: Règles pour empêcher le défilement horizontal */
+        html, body {
+            overflow-x: hidden;
+            width: 100%;
+        }
+        
+        .wrap, .section, .media-grid, .response-item, .game-container, .container {
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+        
+       
+        
         * {
             margin: 0;
             padding: 0;
@@ -3840,3 +3853,4 @@
 
 
     
+
